@@ -102,7 +102,7 @@ var headers = [
 var i = 0;
 for (i = 0; i < 12; i++) {
     var j
-    for (j = 0; j < 3; j++) {
+    for (j = 0; j < 4; j++) {
         const k = i;
         const m = j;
         ratesCards[i + 17 * j].onclick = function () {

@@ -713,6 +713,79 @@ navbar {
     margin-left: auto;
 }
 
+#rates--container--recruiter--plus {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.rates--recruiter--text {
+    width: 55%;
+    margin: 50px 0 50px 0;
+    font-size: 20px;
+    text-align: center;
+}
+
+.rates--recruiter--text h3 {
+    text-align: center;
+    color: #E1712F;
+    padding-bottom: 15px;
+    text-decoration: underline;
+}
+
+th, td {
+    padding: 15px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.rates--recruiter--row {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    padding: 15px;
+    font-size: 20px;
+    text-align: center;
+}
+
+.rates--recruiter--row ul {
+    width: 250px;
+    display: inline-block;
+    margin: 0 25px 0 25px;
+}
+
+.rates--recruiter--row ul h4 {
+    color: #E1712F;
+    font-size: 18px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+
+.rates--recruiter--row ul li {
+    padding: 0px;
+    margin: 5px;
+    font-size: 20px;
+    text-align: left;
+}
+
+.rates--recruiter--packages {
+    text-align: center;
+    font-size: 18px;
+}
+
+.rates--recruiter--packages b {
+    text-align: center;
+    font-size: 18px;
+}
+
+.rates--recruiter--packages h4 b {
+    color: #E1712F;
+    font-size: 26px;
+}
+
+
+
 /**************************************************************
  *  MODAL
  *************************************************************/

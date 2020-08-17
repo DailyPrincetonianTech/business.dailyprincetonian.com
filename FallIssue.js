@@ -70,7 +70,7 @@ fallBtnCampus.onclick = function() {
         <div class="fall--option">
             <div class="fall--option--container">
                 <img src="FallPrint/Eighth.png">
-                <p>8<sup>th</sup> Page*<br>$190</p>
+                <p>Eighth Page*<br>$190</p>
             </div>
         </div>
         <div class="fall--option fall--option--truck" style="margin: 0;">
@@ -113,12 +113,12 @@ fallBtnCampus.onclick = function() {
     fallDealDiv.innerHTML = `
     <h3>Advertising Deals:</h3>
     <ul>
-        <li>$1500 = complementary qtr. page ad</li>
-        <li>$2100 = full page ad in all three issues (27% discount)</li>
-        <li>$2500 = complementary half page ad</li>
-        <li>$3500 = complementary full page ad</li>
-        <li>$10000 = Lead Sponsor for three issues (26% discount)</li>
-
+        <li>Full page ad in all three issues: $2100 (27% discount)</li>
+        <li>Lead Sponsor for three issues: $10000 (26% discount)</li>
+        <br>
+        <li>Purchase $1500+ and receive an additional qtr. page ad</li>
+        <li>Purchase $2500+ and receive an additional half page ad</li>
+        <li>Purchase $3500+ and receive an additional full page ad</li>
     </ul>`;
 };
 
@@ -156,7 +156,7 @@ fallBtnGeneral.onclick = function() {
         <div class="fall--option">
             <div class="fall--option--container">
                 <img src="FallPrint/Eighth.png">
-                <p>8<sup>th</sup> Page*<br>$310</p>
+                <p>Eighth Page*<br>$310</p>
             </div>
         </div>
         <div class="fall--option fall--option--truck" style="margin: 0;">
@@ -199,11 +199,11 @@ fallBtnGeneral.onclick = function() {
     fallDealDiv.innerHTML = `
     <h3>Advertising Deals:</h3>
     <ul>
-        <li>$2900 = complementary qtr. page ad</li>
-        <li>$3460 = full page ad in all three issues (27% discount)</li>
-        <li>$4000 = complementary half page ad</li>
-        <li>$5500 = complementary full page ad</li>
-        <li>$14400 = Lead Sponsor for three issues (26% discount)</li>
-
+        <li>Full page ad in all three issues: $3460 (27% discount)</li>
+        <li>Lead Sponsor for three issues: $14400 (26% discount)</li>
+        <br>
+        <li>Purchase $2900+ and receive an additional qtr. page ad</li>
+        <li>Purchase $4000+ and receive an additional half page ad</li>
+        <li>Purchase $5500+ and receive an additional full page ad</li>
     </ul>`;
 };

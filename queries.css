@@ -1,6 +1,6 @@
 /* Extra large devices (large laptops and desktops) */
 @media only screen and (max-width: 1200px) {
-    
+
     /* FIXING HEADERS  */
     .header--line.animations--visible {
         width: 18%;
@@ -9,7 +9,7 @@
     .header--title {
         width: 62%;
     }
-    
+
     .why--line.animations--visible {
         width: 18%;
     }
@@ -17,30 +17,30 @@
     .why--title.animations--visible {
         width: 62%;
     }
-    
+
     /* FIXING WHAT IS THE PRINCE  */
     .prince--icon img {
         width: 150px;
     }
-    
+
     .prince--title {
         font-size: 76px;
     }
-    
-        
+
+
     .hamburger {
         display: block;
     }
-    
+
     .navbar--wide {
         display: none;
     }
-    
+
     /* FOOTER */
     .footer ul {
         margin-right: 20px;
     }
-    
+
     .footer--row img {
         height: 100px;
     }
@@ -57,7 +57,7 @@
     .header--title {
         width: 80%;
     }
-    
+
     .why--line.animations--visible {
         width: 10%;
     }
@@ -65,19 +65,27 @@
     .why--title.animations--visible {
         width: 80%;
     }
-    
+
     /* FIXING WHAT IS THE PRINCE  */
     .prince--icon img {
         width: 100px;
     }
-    
+
     .prince--title {
         font-size: 66px;
     }
-    
+
     /* FOOTER */
     .footer--logo {
         display: none;
+    }
+
+    .fall--extra li, .fall--extra li b {
+        font-size: 20px;
+    }
+
+    .fall--extra li a {
+        font-size: 16px;
     }
 }
 
@@ -91,7 +99,7 @@
     .header--title {
         width: 100%;
     }
-    
+
     .why--line.animations--visible {
         width: 0%;
     }
@@ -99,12 +107,12 @@
     .why--title.animations--visible {
         width: 100%;
     }
-    
+
     /* FIXING WHAT IS THE PRINCE  */
     .prince--icon img {
         width: 75px;
     }
-    
+
     .prince--title {
         font-size: 48px;
     }
@@ -125,12 +133,12 @@
     .footer li b a {
         font-size: 12px;
     }
-    
+
     .footer ul img {
         height: 12px;
     }
-    
-    
+
+
     .meet--chart img {
         height: 300px;
     }
@@ -149,7 +157,7 @@
     .advertising--optbreak {
         display: block;
     }
-    
+
     /* FIXING WHAT IS THE PRINCE  */
     .prince--icon img {
         margin-top: 25px;
@@ -162,11 +170,11 @@
     .section {
         padding: 30px;
     }
-    
+
     .footer ul {
         line-height: 1;
     }
-    
+
     .footer li {
         float: left;
         margin: 5px;
@@ -175,9 +183,22 @@
     .footer--break {
         display: block;
     }
-    
+
     .meet--chart img {
         height: 200px;
+    }
+
+    .advertising--special--ad a {
+        font-size: 16px;
+    }
+
+    .fall--option--truck .fall--option--container {
+        width: 280px;
+        height: 580px;
+    }
+
+    .advertising--extra {
+        font-size: 16px;
     }
 }
 
@@ -187,8 +208,12 @@
     .meet--chart img {
         height: 160px;
     }
+
+    .advertising--extra {
+        font-size: 12px;
+    }
+
+    .advertising--special--ad a {
+        font-size: 12px;
+    }
 }
-
-
-
-

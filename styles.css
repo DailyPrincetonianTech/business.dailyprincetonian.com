@@ -1071,6 +1071,66 @@ th, td {
     margin-top: 20px;
 }
 
+/**************************************************************
+ *  SUBMIT
+ *************************************************************/
+
+.submit {
+    background-color: #F7F8FA;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit--text {
+    text-align: center;
+    width: 80%;
+}
+
+.submit--accent {
+    color: #E1712F;
+}
+
+.submit--buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 100px;
+}
+
+.submit--button {
+    padding: 100px 50px 100px 50px;
+    width: 175px;
+    height: 200px;
+    border-radius: 20px;
+    margin: 20px;
+    font-weight: 600;
+    color: #000;
+    text-transform: uppercase;
+    text-align: center;
+    transition: transform 0.3s ease-out;
+    opacity: 0.8;
+}
+
+.submit--button:hover {
+    transform: translate(0, -20px);
+    opacity: 1;
+}
+
+#submit--button--1 {
+    background-image: linear-gradient(#E1712F, #F7F8FA);
+}
+
+#submit--button--2 {
+    background-image: linear-gradient(#E19548, #F7F8FA);
+}
+
+#submit--button--3 {
+    background-image: linear-gradient(#EECEAD, #F7F8FA);
+}
+
 
 /**************************************************************
  *  FOOTER

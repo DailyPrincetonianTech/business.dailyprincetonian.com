@@ -87,6 +87,21 @@
     .fall--extra li a {
         font-size: 16px;
     }
+
+    .submit--button {
+        padding: 75px 35px 75px 35px;
+        width: 120px;
+        height: 150px;
+        border-radius: 20px;
+        margin: 20px;
+        font-weight: 600;
+        color: #000;
+        text-transform: uppercase;
+        text-align: center;
+        transition: transform 0.3s ease-out;
+        opacity: 0.8;
+        font-size: 18px;
+    }
 }
 
 /* Medium devices (landscape tablets) */
@@ -141,6 +156,21 @@
 
     .meet--chart img {
         height: 300px;
+    }
+
+    .submit--button {
+        padding: 50px 25px 50px 25px;
+        width: 75px;
+        height: 100px;
+        border-radius: 20px;
+        margin: 20px;
+        font-weight: 600;
+        color: #000;
+        text-transform: uppercase;
+        text-align: center;
+        transition: transform 0.3s ease-out;
+        opacity: 0.8;
+        font-size: 12px;
     }
 
 }
@@ -200,6 +230,21 @@
     .advertising--extra {
         font-size: 16px;
     }
+
+    .submit--button {
+        padding: 50px 25px 50px 25px;
+        width: 75px;
+        height: 100px;
+        border-radius: 20px;
+        margin: 0px;
+        font-weight: 600;
+        color: #000;
+        text-transform: uppercase;
+        text-align: center;
+        transition: transform 0.3s ease-out;
+        opacity: 0.8;
+        font-size: 12px;
+    }
 }
 
 
@@ -215,5 +260,20 @@
 
     .advertising--special--ad a {
         font-size: 12px;
+    }
+
+    .submit--button {
+        padding: 40px 20px 40px 20px;
+        width: 75px;
+        height: 100px;
+        border-radius: 20px;
+        margin: 0px;
+        font-weight: 600;
+        color: #000;
+        text-transform: uppercase;
+        text-align: center;
+        transition: transform 0.3s ease-out;
+        opacity: 0.8;
+        font-size: 10px;
     }
 }

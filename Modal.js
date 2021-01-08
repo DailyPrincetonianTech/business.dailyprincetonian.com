@@ -14,9 +14,9 @@ var btnClose = document.getElementById("closeModal");
 
 var descrips = [
     `
-    Pixel Size: 970x270
+    Pixel Size: 970x250 AND 320x50
     <br>
-    For Higher Quality Images, Submit Double Resolution: 1940x540
+    For Higher Quality Images, Submit Double Resolution: 1940x500 AND 640x100
     `,
     `
     Pixel Size: 300x600

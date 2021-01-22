@@ -2050,7 +2050,7 @@
       $(".rates--select").change(function() {
         document.querySelector(".rates--select--container").classList.remove("none--selected")
         var x = $('.rates--select option:selected').text();
-        if (x == 'Local Advertiser') {
+        if (x == 'Local Advertiser (Mercer County)') {
           toggleVisibility(["rates--container--student", "rates--container--national", "rates--container--recruiter--plus"], "rates--container--local");
         } else if (x == 'National Advertiser') {
           toggleVisibility(["rates--container--student", "rates--container--local", "rates--container--recruiter--plus"], "rates--container--national");

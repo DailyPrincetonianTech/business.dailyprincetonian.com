@@ -31,13 +31,7 @@ var descrips = [
     Note that this ad appears in the article on mobile (all readers must scroll past it) and next to the article on desktop. About 70% of our readers view our site on their mobile devices.
     `,
     `
-    With both click rates and open rates of more than 2 times the industry average, the breaking news email reservation is one of the best ways to engage with The Daily Princetonian’s subscribers. Our subscribers are students, parents, faculty, alumni, and local Princeton residents; feel free to contact us for more details regarding our subscriber demographics. A breaking news email reservation includes the next breaking news email(s) that comes out.
-    `,
-    `
     With a 9.6% click rate, our readers engage with our newsletter at more than double the industry average. Email newsletters come out every weekday when school is in session and once per week when school is out of session. Our subscribers are mostly students, parents, faculty, alumni, and local Princeton residents; feel free to contact us for more details regarding our subscriber demographics.
-    `,
-    `
-    With an average reach of 2000 users and a 10% average click rate, our sponsored Facebook posts offer a premium high-engagement opportunity. All we need from you is your ad, your link, and a caption.
     `,
     `
     With an average reach of 2000 users and a 10% average click rate, our sponsored Facebook posts offer a premium high-engagement opportunity. All we need from you is your ad, your link, and a caption.
@@ -56,6 +50,9 @@ var descrips = [
     `,
     `
     Read at the beginning of The Daily Princetonian’s podcasts (every week day when school is in session; once a week when school is out of session), your Podcast Ad can be up to 15 seconds long.
+    `,
+    `
+    Our crossword is released weekly <a href="http://crossword.dailyprincetonian.com"><small>here</small></a> and attracts many students looking for a fun study break.
     `
 ];
 
@@ -76,32 +73,30 @@ var cpms = [
     ``,
     ``,
     ``,
-    ``
 ];
 
 var headers = [
     `Website Billboard`,
     `Website Skyscraper`,
     `Website Block`,
-    `Breaking News Email Reservation`,
     `Email Headline`,
     `Facebook Post`,
-    `Facebook Story`,
     `Instagram Post`,
     `Instagram Story`,
     `Twitter Post`,
     `YouTube Ad`,
-    `Podcast Ad`
+    `Podcast Ad`,
+    `Crossword Ad`,
 ];
 
 
 var i = 0;
-for (i = 0; i < 12; i++) {
+for (i = 0; i < 11; i++) {
     var j
     for (j = 0; j < 4; j++) {
         const k = i;
         const m = j;
-        ratesCards[i + 17 * j].onclick = function () {
+        ratesCards[i + 16 * j].onclick = function () {
             modal.className = "Modal is-visuallyHidden";
             var descrip = document.getElementById("modal--descrip");
             if (m == 2) {

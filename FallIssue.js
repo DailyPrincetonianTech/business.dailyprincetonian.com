@@ -1,7 +1,7 @@
 var fallIssueOpt = document.getElementsByClassName("fall--option--container");
 
 for (i = 0; i < fallIssueOpt.length; i++) {
-    fallIssueOpt[i].onmouseover = function() {
+    fallIssueOpt[i].onmouseover = function () {
         var children = this.children;
         for (j = 0; j < children.length; j++) {
             if (children[j].nodeName == "IMG") {
@@ -13,7 +13,7 @@ for (i = 0; i < fallIssueOpt.length; i++) {
         }
     };
 
-    fallIssueOpt[i].onmouseout = function() {
+    fallIssueOpt[i].onmouseout = function () {
         var children = this.children;
         for (j = 0; j < children.length; j++) {
             if (children[j].nodeName == "IMG") {
@@ -36,7 +36,7 @@ fallBtnCampus.style.backgroundColor = "#E1712F";
 fallBtnCampus.style.opacity = 1;
 fallBtnCampus.style.color = "#FFF";
 
-fallBtnCampus.onclick = function() {
+fallBtnCampus.onclick = function () {
     fallBtnCampus.style.backgroundColor = "#E1712F";
     fallBtnCampus.style.opacity = 1;
     fallBtnCampus.style.color = "#FFF";
@@ -85,7 +85,7 @@ fallBtnCampus.onclick = function() {
     var fallIssueOpt = document.getElementsByClassName("fall--option--container");
 
     for (i = 0; i < fallIssueOpt.length; i++) {
-        fallIssueOpt[i].onmouseover = function() {
+        fallIssueOpt[i].onmouseover = function () {
             var children = this.children;
             for (j = 0; j < children.length; j++) {
                 if (children[j].nodeName == "IMG") {
@@ -97,7 +97,7 @@ fallBtnCampus.onclick = function() {
             }
         };
 
-        fallIssueOpt[i].onmouseout = function() {
+        fallIssueOpt[i].onmouseout = function () {
             var children = this.children;
             for (j = 0; j < children.length; j++) {
                 if (children[j].nodeName == "IMG") {
@@ -122,7 +122,7 @@ fallBtnCampus.onclick = function() {
     </ul>`;
 };
 
-fallBtnGeneral.onclick = function() {
+fallBtnGeneral.onclick = function () {
     fallBtnGeneral.style.backgroundColor = "#E1712F";
     fallBtnGeneral.style.opacity = 1;
     fallBtnGeneral.style.color = "#FFF";
@@ -171,7 +171,7 @@ fallBtnGeneral.onclick = function() {
     var fallIssueOpt = document.getElementsByClassName("fall--option--container");
 
     for (i = 0; i < fallIssueOpt.length; i++) {
-        fallIssueOpt[i].onmouseover = function() {
+        fallIssueOpt[i].onmouseover = function () {
             var children = this.children;
             for (j = 0; j < children.length; j++) {
                 if (children[j].nodeName == "IMG") {
@@ -183,7 +183,7 @@ fallBtnGeneral.onclick = function() {
             }
         };
 
-        fallIssueOpt[i].onmouseout = function() {
+        fallIssueOpt[i].onmouseout = function () {
             var children = this.children;
             for (j = 0; j < children.length; j++) {
                 if (children[j].nodeName == "IMG") {

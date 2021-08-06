@@ -106,23 +106,23 @@ for (i = 0; i < 11; i++) {
             }
             var header = document.getElementById("modal--header");
             header.innerHTML = headers[k];
-            setTimeout(function() {
-              body.className = "MainContainer is-blurred";
-              modal.className = "Modal";
+            setTimeout(function () {
+                body.className = "MainContainer is-blurred";
+                modal.className = "Modal";
             }, 100);
         };
     }
 }
 
 // Close the modal
-btnClose.onclick = function() {
+btnClose.onclick = function () {
     modal.className = "Modal is-hidden is-visuallyHidden";
     body.className = "";
 }
 
 
 // When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
+window.onclick = function (event) {
     if (event.target == modal) {
         modal.className = "Modal is-hidden";
         body.className = "";

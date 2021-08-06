@@ -167,7 +167,7 @@ navbar {
 
 .advertising {
   background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 1)),
-    url(newspaper.png);
+    url(https://assets.dailyprincetonian.com/business.dailyprincetonian.com/newspaper.png);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;

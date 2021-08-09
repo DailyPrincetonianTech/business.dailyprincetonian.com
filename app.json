@@ -1,0 +1,13 @@
+{
+    "buildpacks": [
+        { "url": "heroku/nodejs" },
+        { "url": "heroku/python" }
+    ],
+    "environments": {
+        "test": {
+            "scripts": {
+                "test": "yarn lint && yarn test"
+            }
+        }
+    }
+}

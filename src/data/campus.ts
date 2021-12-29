@@ -13,7 +13,8 @@ const campusWeeklyPrint: Rate[] = [
             }
         ],
         description: "(10 x 21 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -28,7 +29,8 @@ const campusWeeklyPrint: Rate[] = [
             }
         ],
         description: "(5 x 21 in.) or (10 x 10.5 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -43,7 +45,8 @@ const campusWeeklyPrint: Rate[] = [
             }
         ],
         description: "(5 x10.5 in.) or (10 x 5.25 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Medium,
@@ -59,6 +62,7 @@ const campusWeeklyPrint: Rate[] = [
         ],
         description: "TODO",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: undefined,
@@ -74,6 +78,7 @@ const campusWeeklyPrint: Rate[] = [
         ],
         description: "TODO",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: undefined,
@@ -99,7 +104,8 @@ const campusWebsite: Rate[] = [
             }
         ],
         description: "(1940x500), (Actual Size = 970x250)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -124,7 +130,8 @@ const campusWebsite: Rate[] = [
             }
         ],
         description: "(600x1200), (Actual Size = 300x600)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -149,7 +156,8 @@ const campusWebsite: Rate[] = [
             }
         ],
         description: "(600x500), (Actual Size = 300x250)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -177,7 +185,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -202,7 +211,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -227,7 +237,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -252,7 +263,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -277,7 +289,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -302,7 +315,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per email"
         ],
@@ -327,7 +341,8 @@ const campusSocialMediaAndEmail: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -351,7 +366,8 @@ const campusWebApps: Rate[] = [
             }
         ],
         description: "crossword.dailyprincetonian.com",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per week"
         ],
@@ -372,7 +388,8 @@ const campusWebApps: Rate[] = [
             }
         ],
         description: "campus.dailyprincetonian.com",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "new product, prices to vary monthly"
         ],
@@ -400,7 +417,8 @@ const campusSpecialty: Rate[] = [
             },
         ],
         description: "sponsored.dailyprincetonian.com",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per week"
         ],
@@ -425,7 +443,8 @@ const campusSpecialty: Rate[] = [
             },
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per video"
         ],
@@ -450,7 +469,9 @@ const campusSpecialty: Rate[] = [
             },
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
+        
         notes: [
             "prices listed per podcast"
         ],

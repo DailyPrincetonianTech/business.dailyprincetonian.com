@@ -453,8 +453,15 @@
       </div>
     </div>
 
-    <div class="rates section" id="root"></div>
-
+    <div class="rates section" id="rates">
+      <div class="header">
+        <div class="header--line">&nbsp;</div>
+        <div class="header--title">ADVERTISING RATES</div>
+        <div class="header--line">&nbsp;</div>
+      </div>
+      <div id="root">
+      </div>
+    </div>
     <div id="myModal" class="Modal is-hidden is-visuallyHidden">
       <!-- Modal content -->
       <div class="Modal-content">
@@ -765,7 +772,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="%PUBLIC_URL%/Modal.js"></script>
+    <!--<script src="%PUBLIC_URL%/Modal.js"></script>-->
     <script src="%PUBLIC_URL%/FallIssue.js"></script>
     <script>
       // NAVBAR
@@ -817,7 +824,7 @@
         }, timeoutLen);
         timeoutLen = 1000;
       }
-
+      /**
       $(document).ready(function () {
         document.getElementById("rates--container--local").style.display =
           "none";
@@ -833,6 +840,7 @@
             .querySelector(".rates--select--container")
             .classList.remove("none--selected");
           var x = $(".rates--select option:selected").text();
+          console.log(x);
           if (x == "Local Advertiser (Mercer County)") {
             toggleVisibility(
               [
@@ -871,7 +879,7 @@
             );
           }
         });
-      });
+      });**/
     </script>
 
     <script>

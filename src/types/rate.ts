@@ -7,6 +7,7 @@ export type Rate = {
   units: Unit[];
   description: string;
   image_url: string;
+  image_alt: string;
   notes: string[];
   cpm?: string;
   color_premium?: ColorPremium;

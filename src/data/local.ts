@@ -9,11 +9,12 @@ const localWeeklyPrint: Rate[] = [
         units: [
             {
                 title: "1 Issue",
-                price: "$635.00",
+                price: "$635",
             }
         ],
-        description: "(10 x 21 in.)",
-        image_url: "",
+        description: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -24,11 +25,12 @@ const localWeeklyPrint: Rate[] = [
         units: [
             {
                 title: "1 Issue",
-                price: "$385.00",
+                price: "$385",
             }
         ],
-        description: "(5 x 21 in.) or (10 x 10.5 in.)",
-        image_url: "",
+        description: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -39,51 +41,22 @@ const localWeeklyPrint: Rate[] = [
         units: [
             {
                 title: "1 Issue",
-                price: "$265.00",
+                price: "$265",
             }
         ],
         description: "(5 x10.5 in.) or (10 x 5.25 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Medium,
         design: Design.Graphic,
-    },
-    {
-        title: "Inside Front Cover",
-        units: [
-            {
-                title: "1 Issue",
-                price: "1.25 x Ad Size Price",
-            }
-        ],
-        description: "",
-        image_url: "",
-        notes: [],
-        cpm: undefined,
-        color_premium: undefined,
-        design: undefined,
-    },
-    {
-        title: "Back Cover",
-        units: [
-            {
-                title: "1 Issue",
-                price: "1.25 x Ad Size Price",
-            }
-        ],
-        description: "",
-        image_url: "",
-        notes: [],
-        cpm: undefined,
-        color_premium: undefined,
-        design: undefined,
-    },
+    }
 ];
 
 const localWebsite: Rate[] = [
     {
-        title: "Billboard",
+        title: "Website Billboard",
         units: [
             {
                 title: "1-4 days",
@@ -98,17 +71,18 @@ const localWebsite: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "(1940x500), (Actual Size = 970x250)",
-        image_url: "",
+        description: "Pixel Size: 970x250 AND 320x50\nFor Higher Quality Images, Submit Double Resolution: 1940x500 AND 640x100",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per day"
+            "Prices listed per day."
         ],
         cpm: undefined,
         color_premium: undefined,
         design: Design.Graphic,
     },
     {
-        title: "Skyscraper",
+        title: "Website Skyscraper",
         units: [
             {
                 title: "1-4 days",
@@ -123,17 +97,18 @@ const localWebsite: Rate[] = [
                 price: "$48.00",
             }
         ],
-        description: "(600x1200), (Actual Size = 300x600)",
-        image_url: "",
+        description: "Pixel Size: 300x600\nFor Higher Quality Images, Submit Double Resolution: 600x1200",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per day"
+            "Prices listed per day."
         ],
         cpm: undefined,
         color_premium: undefined,
         design: Design.Graphic,
     },
     {
-        title: "Box",
+        title: "Website Box",
         units: [
             {
                 title: "1-4 days",
@@ -148,10 +123,11 @@ const localWebsite: Rate[] = [
                 price: "$48.00",
             }
         ],
-        description: "(600x500), (Actual Size = 300x250)",
-        image_url: "",
+        description: "Pixel Size: 300x250\nFor Higher Quality Images, Submit Double Resolution: 600x500\n\n\nNote that this ad appears in the article on mobile (all readers must scroll past it) and next to the article on desktop. About 70% of our readers view our site on their mobile devices.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per day"
+            "Prices listed per day."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -176,10 +152,11 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "Our Instagram is a fantastic way to reach Princeton students and young alumni. All we need from you is your ad, your link, and a caption.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -201,10 +178,12 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "With an average reach of 2000 users and a 10% average click rate, our sponsored Facebook posts offer a premium high-engagement opportunity. All we need from you is your ad, your link, and a caption.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post.",
+            "We only post every other day if you purchase multiple posts."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -226,10 +205,12 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "Leverage our 15,000 Twitter followers. All we need from you is your ad, your link, and a caption.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post.",
+            "We only post every other day if you purchase multiple posts."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -251,10 +232,12 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$28.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "Our Instagram is a fantastic way to reach Princeton students and young alumni. All we need from you is your ad, your link, and a caption.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post.",
+            "We only post every other day if you purchase multiple posts."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -276,10 +259,12 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "Our Instagram is a fantastic way to reach Princeton students and young alumni. All we need from you is your ad, your link, and a caption.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post.",
+            "We only post every other day if you purchase multiple posts."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -301,10 +286,11 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "With a 9.6% click rate, our readers engage with our newsletter at more than double the industry average. Email newsletters come out every weekday when school is in session and once per week when school is out of session. Our subscribers are mostly students, parents, faculty, alumni, and local Princeton residents; feel free to contact us for more details regarding our subscriber demographics.",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per email"
+            "Prices listed per email."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -326,10 +312,11 @@ const localSocialMediaAndEmail: Rate[] = [
                 price: "$40.00",
             }
         ],
-        description: "",
-        image_url: "",
+        description: "...",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per post"
+            "Prices listed per post."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -351,9 +338,10 @@ const localWebApps: Rate[] = [
             }
         ],
         description: "crossword.dailyprincetonian.com",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per week"
+            "Prices listed per week."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -372,9 +360,10 @@ const localWebApps: Rate[] = [
             }
         ],
         description: "campus.dailyprincetonian.com",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "new product, prices to vary monthly"
+            "New product, prices to vary monthly."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -397,9 +386,10 @@ const localWebApps: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per week"
+            "Prices listed per week."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -422,9 +412,10 @@ const localWebApps: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per video"
+            "Prices listed per video."
         ],
         cpm: undefined,
         color_premium: undefined,
@@ -447,9 +438,10 @@ const localWebApps: Rate[] = [
             }
         ],
         description: "",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png",
+        image_alt: "email headline preview",
         notes: [
-            "prices listed per podcast"
+            "Prices listed per podcast."
         ],
         cpm: undefined,
         color_premium: undefined,

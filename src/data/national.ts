@@ -13,7 +13,8 @@ const nationalWeeklyPrint: Rate[] = [
             }
         ],
         description: "(10 x 21 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -28,7 +29,8 @@ const nationalWeeklyPrint: Rate[] = [
             }
         ],
         description: "(5 x 21 in.) or (10 x 10.5 in.)",
-        image_url: "",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Large,
@@ -42,8 +44,9 @@ const nationalWeeklyPrint: Rate[] = [
                 price: "$790.00",
             }
         ],
-        description: "(5 x10.5 in.) or (10 x 5.25 in.)",
-        image_url: "",
+        description: "(5 x 10.5 in.) or (10 x 5.25 in.)",
+        image_url: "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: ColorPremium.Medium,
@@ -59,6 +62,7 @@ const nationalWeeklyPrint: Rate[] = [
         ],
         description: "TODO",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: undefined,
@@ -74,6 +78,7 @@ const nationalWeeklyPrint: Rate[] = [
         ],
         description: "TODO",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [],
         cpm: undefined,
         color_premium: undefined,
@@ -100,6 +105,7 @@ const nationalWebsite: Rate[] = [
         ],
         description: "(1940x500), (Actual Size = 970x250)",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -125,6 +131,7 @@ const nationalWebsite: Rate[] = [
         ],
         description: "(600x1200), (Actual Size = 300x600)",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -150,6 +157,7 @@ const nationalWebsite: Rate[] = [
         ],
         description: "(600x500), (Actual Size = 300x250)",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per day"
         ],
@@ -178,6 +186,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -203,6 +212,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -228,6 +238,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -253,6 +264,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -278,6 +290,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -303,6 +316,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per email"
         ],
@@ -328,6 +342,7 @@ const nationalSocialMediaAndEmail: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per post"
         ],
@@ -352,6 +367,7 @@ const nationalWebApps: Rate[] = [
         ],
         description: "crossword.dailyprincetonian.com",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per week"
         ],
@@ -369,6 +385,7 @@ const nationalWebApps: Rate[] = [
         ],
         description: "campus.dailyprincetonian.com",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "new product, prices to vary monthly"
         ],
@@ -397,6 +414,7 @@ const nationalSpecialty: Rate[] = [
         ],
         description: "sponsored.dailyprincetonian.com",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per week"
         ],
@@ -422,6 +440,7 @@ const nationalSpecialty: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per video"
         ],
@@ -447,6 +466,7 @@ const nationalSpecialty: Rate[] = [
         ],
         description: "",
         image_url: "",
+        image_alt: "email headline preview",
         notes: [
             "prices listed per podcast"
         ],

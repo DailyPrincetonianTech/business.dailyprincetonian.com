@@ -414,3 +414,24 @@ const recruiterDIY: Rate[] = [
         design: Design.Graphic,
     }
 ];
+
+const recruiterAdvertiser: Advertiser = [
+    {
+        title: "Recruiter Lite",
+        rates: recruiterLite,
+    },
+    {
+        title: "Recruiter Standard",
+        rates: recruiterStandard,
+    },
+    {
+        title: "Recruiter Pro",
+        rates: recruiterPro,
+    },
+    {
+        title: "Recruiter DIY",
+        rates: recruiterDIY,
+    },
+];
+
+export default recruiterAdvertiser;

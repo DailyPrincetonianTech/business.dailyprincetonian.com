@@ -14,7 +14,7 @@ import nationalAdvertiser from "./data/national";
 
 function App(): JSX.Element {
   const [type, setType] = useState("default");
-  const [timeoutLen, setTimeoutLen] = useState(0);
+  const [timeoutLen, setTimeoutLen] = useState(250);
   const [modalIsVisible, setVisibility] = useState(false);
   const [modalTitle, setTitle] = useState("");
   const [modalDesc, setDesc] = useState("");
@@ -24,6 +24,7 @@ function App(): JSX.Element {
   const nationalContainer = useRef(null);
   const recruiterContainer = useRef(null);
   const recruiterText = useRef(null);
+  const selectContainer = useRef(null);
 
   const setModal = (title: string, desc: string) => {
     setVisibility(true);
@@ -36,32 +37,26 @@ function App(): JSX.Element {
   }
 
   function toggleVisibility(offs: React.RefObject<HTMLElement>[], on: React.RefObject<HTMLElement>) {
-    for (const off of offs) {
-      for (const elem of off.current.querySelectorAll(".rates--card--container")) {
-        elem.classList.remove('animations--visible');
-      };
-      recruiterText.current.classList.remove('animations--visible');
-    }
+
+    if (timeoutLen==250) selectContainer.current.classList.remove("none--selected");
+
     setTimeout(() => {
-      on.current.style.display = "";
-    }, timeoutLen==0 ? 0 : 800);
-    
-    setTimeout(() => {
-      for (const off of offs) {
-        off.current.style.display = "none";
-      };
-      for (const elem of on.current.querySelectorAll(".rates--card--container")) {
-        elem.classList.add('animations--visible');
-      };
+      on.current.classList.add('animations--visible');
       recruiterText.current.classList.add('animations--visible');
     }, timeoutLen);
-    setTimeoutLen(1000);
+    setTimeoutLen(800);
+
+
+    for (const off of offs) {
+      off.current.classList.remove('animations--visible');
+      recruiterText.current.classList.remove('animations--visible');
+    }
   }
 
   return (
     <>
       <Modal hideModal={hideModal} isVisible={modalIsVisible} title={modalTitle} description={modalDesc}/>
-      <div className={`rates--select--container ${type=="default" ? "none--selected" : ""}`}>
+      <div ref={selectContainer} className={`rates--select--container none--selected`}>
         <div className="rates--text">
           Please contact <a href="mailto:business@dailyprincetonian.com"
             >business@dailyprincetonian.com</a> for more information on pricing and custom packages.
@@ -73,11 +68,11 @@ function App(): JSX.Element {
         <div>I am a</div>
         <select defaultValue="default" className="rates--select" onChange={(e)=>{
           let val = e.target.value;
+          setType(e.target.value);
           if(val=="campus") toggleVisibility([nationalContainer,localContainer,recruiterContainer], campusContainer);
           else if(val=="local") toggleVisibility([nationalContainer,campusContainer,recruiterContainer], localContainer);
           else if(val=="national") toggleVisibility([campusContainer,localContainer,recruiterContainer], nationalContainer);
           else if(val=="recruiter") toggleVisibility([campusContainer,localContainer,nationalContainer], recruiterContainer);
-          setType(e.target.value);
         }}>
           <option hidden disabled value="default" className="rates--select--option">
             -- select an option --
@@ -96,7 +91,7 @@ function App(): JSX.Element {
           </option>
         </select>
       </div>
-      <div ref={recruiterContainer} id="recruiter" style={{display: "none"}} className="rates--container">
+      <div ref={recruiterContainer} id="recruiter" className="rates--container">
         <div ref={recruiterText} className="rates--recruiter--text" id="rates--recruiter--text">
           <h3>Fall Recruiting Calendar</h3>
           <table style={{width: "100%"}}>
@@ -182,17 +177,17 @@ function App(): JSX.Element {
           </div>
         </div>
       </div>
-      <div ref={nationalContainer} id="national" style={{display: "none"}} className="rates--container">
+      <div ref={nationalContainer} id="national" className="rates--container">
         {nationalAdvertiser.map((adGroup: AdGroup) => (
           <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
         ))}
       </div>
-      <div ref={localContainer} id="local" style={{display: "none"}} className="rates--container">
+      <div ref={localContainer} id="local" className="rates--container">
         {localAdvertiser.map((adGroup: AdGroup) => (
           <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
         ))}
       </div>
-      <div ref={campusContainer} id="campus" style={{display: "none"}} className="rates--container">
+      <div ref={campusContainer} id="campus" className="rates--container">
         {campusAdvertiser.map((adGroup: AdGroup) => (
           <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
         ))}

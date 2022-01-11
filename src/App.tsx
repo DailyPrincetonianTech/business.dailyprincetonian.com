@@ -1,9 +1,4 @@
 import React from "react";
-// import { Provider } from "react-redux";
-
-// import { store } from "./state/store";
-
-import "./App.css";
 import localAdvertiser from "./data/local";
 import campusAdvertiser from "./data/campus";
 import { useState, useRef } from "react";

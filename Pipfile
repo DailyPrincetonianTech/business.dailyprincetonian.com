@@ -1,0 +1,22 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[pipenv]
+allow_prereleases = true
+
+[packages]
+flask = "*"
+flask-restful = "*"
+marshmallow = "*"
+firebase-admin = "*"
+gunicorn = "*"
+
+[dev-packages]
+pylint = "*"
+black = "*"
+pytest = "*"
+
+[requires]
+python_version = "3.9"

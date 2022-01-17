@@ -1,3 +1,3 @@
-import { AdGroup } from "./adGroup";
+import { AdGroup } from './adGroup';
 
 export type Advertiser = Array<AdGroup>;

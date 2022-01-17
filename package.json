@@ -41,10 +41,11 @@
   "scripts": {
     "update": "ncu -u && yarn install",
     "test:client": "react-scripts test",
-    "start": "react-scripts start",
+    "start": "PORT=8080 react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "run": "yarn build"
+    "run": "yarn build",
+    "lint": "eslint --fix --ext .ts,.tsx ."
   },
   "browserslist": {
     "production": [

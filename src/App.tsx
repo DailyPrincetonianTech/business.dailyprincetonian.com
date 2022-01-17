@@ -1,18 +1,16 @@
-import React from "react";
-import localAdvertiser from "./data/local";
-import campusAdvertiser from "./data/campus";
-import { useState, useRef } from "react";
-import { AdGroup } from "./types/adGroup";
-import Modal from "./modal"
-import Advertiser from "./advertiser"
-import nationalAdvertiser from "./data/national";
+import React, { useState, useRef, useEffect } from 'react';
+import localAdvertiser from './data/local';
+import campusAdvertiser from './data/campus';
+import { AdGroup } from './types/adGroup';
+import Modal from './modal';
+import Advertiser from './advertiser';
+import nationalAdvertiser from './data/national';
 
 function App(): JSX.Element {
-  const [type, setType] = useState("default");
   const [timeoutLen, setTimeoutLen] = useState(250);
   const [modalIsVisible, setVisibility] = useState(false);
-  const [modalTitle, setTitle] = useState("");
-  const [modalDesc, setDesc] = useState("");
+  const [modalTitle, setTitle] = useState('');
+  const [modalDesc, setDesc] = useState('');
 
   const campusContainer = useRef(null);
   const localContainer = useRef(null);
@@ -25,15 +23,14 @@ function App(): JSX.Element {
     setVisibility(true);
     setTitle(title);
     setDesc(desc);
-  }
+  };
 
   const hideModal = () => {
     setVisibility(false);
-  }
+  };
 
   function toggleVisibility(offs: React.RefObject<HTMLElement>[], on: React.RefObject<HTMLElement>) {
-
-    if (timeoutLen==250) selectContainer.current.classList.remove("none--selected");
+    if (timeoutLen === 250) selectContainer.current.classList.remove('none--selected');
 
     setTimeout(() => {
       on.current.classList.add('animations--visible');
@@ -41,34 +38,50 @@ function App(): JSX.Element {
     }, timeoutLen);
     setTimeoutLen(800);
 
-
     for (const off of offs) {
       off.current.classList.remove('animations--visible');
       recruiterText.current.classList.remove('animations--visible');
     }
   }
 
+  useEffect(() => {
+    fetch('/api/addl_fees')
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+      });
+  });
+
   return (
     <>
-      <Modal hideModal={hideModal} isVisible={modalIsVisible} title={modalTitle} description={modalDesc}/>
-      <div ref={selectContainer} className={`rates--select--container none--selected`}>
+      <Modal hideModal={hideModal} isVisible={modalIsVisible} title={modalTitle} description={modalDesc} />
+      <div ref={selectContainer} className="rates--select--container none--selected">
         <div className="rates--text">
-          Please contact <a href="mailto:business@dailyprincetonian.com"
-            >business@dailyprincetonian.com</a> for more information on pricing and custom packages.
-          <br /><br />
+          Please contact
+          {' '}
+          <a href="mailto:business@dailyprincetonian.com">
+            business@dailyprincetonian.com
+          </a>
+          {' '}
+          for more information on pricing and custom packages.
+          <br />
+          <br />
           All digital advertisements can link to your website. Additionally, all
           digital advertisement purchases come with a complementary analytics
           report with key statistics, including impressions (views) and clicks.
         </div>
         <div>I am a</div>
-        <select defaultValue="default" className="rates--select" onChange={(e)=>{
-          let val = e.target.value;
-          setType(e.target.value);
-          if(val=="campus") toggleVisibility([nationalContainer,localContainer,recruiterContainer], campusContainer);
-          else if(val=="local") toggleVisibility([nationalContainer,campusContainer,recruiterContainer], localContainer);
-          else if(val=="national") toggleVisibility([campusContainer,localContainer,recruiterContainer], nationalContainer);
-          else if(val=="recruiter") toggleVisibility([campusContainer,localContainer,nationalContainer], recruiterContainer);
-        }}>
+        <select
+          defaultValue="default"
+          className="rates--select"
+          onChange={(e) => {
+            const val = e.target.value;
+            if (val === 'campus') toggleVisibility([nationalContainer, localContainer, recruiterContainer], campusContainer);
+            else if (val === 'local') toggleVisibility([nationalContainer, campusContainer, recruiterContainer], localContainer);
+            else if (val === 'national') toggleVisibility([campusContainer, localContainer, recruiterContainer], nationalContainer);
+            else if (val === 'recruiter') toggleVisibility([campusContainer, localContainer, nationalContainer], recruiterContainer);
+          }}
+        >
           <option hidden disabled value="default" className="rates--select--option">
             -- select an option --
           </option>
@@ -89,9 +102,9 @@ function App(): JSX.Element {
       <div ref={recruiterContainer} id="recruiter" className="rates--container">
         <div ref={recruiterText} className="rates--recruiter--text" id="rates--recruiter--text">
           <h3>Fall Recruiting Calendar</h3>
-          <table style={{width: "100%"}}>
+          <table style={{ width: '100%' }}>
             <tr>
-              <td style={{textAlign: "right", verticalAlign: "top", width: "135px"}}>
+              <td style={{ textAlign: 'right', verticalAlign: 'top', width: '135px' }}>
                 <b>Aug. 17</b>
               </td>
               <td>
@@ -101,7 +114,7 @@ function App(): JSX.Element {
               </td>
             </tr>
             <tr>
-              <td style={{textAlign: "right", verticalAlign: "top", width: "135px"}}>
+              <td style={{ textAlign: 'right', verticalAlign: 'top', width: '135px' }}>
                 <b>Sep. 2</b>
               </td>
               <td>
@@ -110,7 +123,7 @@ function App(): JSX.Element {
               </td>
             </tr>
             <tr>
-              <td style={{textAlign: "right", verticalAlign: "top", width: "135px"}}>
+              <td style={{ textAlign: 'right', verticalAlign: 'top', width: '135px' }}>
                 <b>Sep. 11</b>
               </td>
               <td>
@@ -119,7 +132,7 @@ function App(): JSX.Element {
               </td>
             </tr>
             <tr>
-              <td style={{textAlign: "right", verticalAlign: "top", width: "135px"}}>
+              <td style={{ textAlign: 'right', verticalAlign: 'top', width: '135px' }}>
                 <b>Sep. 14-17</b>
               </td>
               <td>
@@ -127,7 +140,7 @@ function App(): JSX.Element {
               </td>
             </tr>
             <tr>
-              <td style={{textAlign: "right", verticalAlign: "top", width: "135px"}}>
+              <td style={{ textAlign: 'right', verticalAlign: 'top', width: '135px' }}>
                 <b>Sep. 21</b>
               </td>
               <td>
@@ -162,29 +175,37 @@ function App(): JSX.Element {
           <h3>Packages</h3>
           <div className="rates--recruiter--packages">
             <h4>
-              <b>Direct to Student 2 Week Campaign</b>&nbsp;&nbsp;&nbsp;$1999
+              <b>Direct to Student 2 Week Campaign</b>
+&nbsp;&nbsp;&nbsp;$1999
             </h4>
-            <b>20% off</b> 2 weeks of social media &amp; newsletter <br /><br />
+            <b>20% off</b>
+            {' '}
+            2 weeks of social media &amp; newsletter
+            <br />
+            <br />
             <h4>
-              <b>All-Inclusive 1 Week Digital Blast</b>&nbsp;&nbsp;&nbsp;$2339
+              <b>All-Inclusive 1 Week Digital Blast</b>
+&nbsp;&nbsp;&nbsp;$2339
             </h4>
-            <b>25% off</b> Email Newsletter, Website, Social Medias
+            <b>25% off</b>
+            {' '}
+            Email Newsletter, Website, Social Medias
           </div>
         </div>
       </div>
       <div ref={nationalContainer} id="national" className="rates--container">
         {nationalAdvertiser.map((adGroup: AdGroup) => (
-          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
+          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates} />
         ))}
       </div>
       <div ref={localContainer} id="local" className="rates--container">
         {localAdvertiser.map((adGroup: AdGroup) => (
-          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
+          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates} />
         ))}
       </div>
       <div ref={campusContainer} id="campus" className="rates--container">
         {campusAdvertiser.map((adGroup: AdGroup) => (
-          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates}/>
+          <Advertiser setModal={setModal} title={adGroup.title} rates={adGroup.rates} />
         ))}
       </div>
     </>

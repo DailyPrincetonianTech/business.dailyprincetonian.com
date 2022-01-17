@@ -4,4 +4,4 @@ from app import app
 
 api = Api(app)
 
-from app.http.api.example import Example
+from app.http.api import addl_fees

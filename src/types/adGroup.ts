@@ -1,6 +1,6 @@
-import { Rate } from "./rate";
+import { Rate } from './rate';
 
 export type AdGroup = {
-    title: string;
-    rates: Rate[];
-}
+  title: string;
+  rates: Rate[];
+};

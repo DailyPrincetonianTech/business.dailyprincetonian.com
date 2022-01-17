@@ -4,7 +4,7 @@ module.exports = {
     browser: true,
     es2021: true,
   },
-  extends: ["plugin:react/recommended", "airbnb", "airbnb-typescript", "plugin:prettier/recommended"],
+  extends: ["plugin:react/recommended", "airbnb", "airbnb-typescript"],
   overrides: [
     {
       files: ["*.ts", "*.tsx"],
@@ -31,6 +31,14 @@ module.exports = {
     ],
     "no-underscore-dangle": "off",
     "no-plusplus": "off",
+    "no-restricted-syntax": "off",
+    "max-len": "off",
+    "click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": 0,
+    "jsx-a11y/click-events-have-key-events": 0,
+    "import/prefer-default-export": 0,
+    "react/no-unused-prop-types": 0,
+    "react/destructuring-assignment": 0,
     "react/function-component-definition": 0,
     "react/no-arrow-function-lifecycle":  0,
     "react/no-invalid-html-attribute": 0,

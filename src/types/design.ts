@@ -1,4 +1,4 @@
 export enum Design {
-  Graphic = "graphic",
-  Media = "media",
+  Graphic = 'graphic',
+  Media = 'media',
 }

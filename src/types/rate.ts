@@ -1,6 +1,6 @@
-import { Unit } from "./unit";
-import { ColorPremium } from "./colorPremium";
-import { Design } from "./design";
+import { Unit } from './unit';
+import { ColorPremium } from './colorPremium';
+import { Design } from './design';
 
 export type Rate = {
   title: string;

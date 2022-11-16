@@ -1,5 +1,5 @@
 from flask import Flask
-from app.database import DynamoDB as db
+from app.database import db
 from config import Config
 
 # View imports.
@@ -14,7 +14,7 @@ def init_app(config_object):
 
     with app.app_context():
         # Initialize database.
-        db.initialize(**app.config)
+        db.init_app(app)
         
         # Register blueprints.
         app.register_blueprint(home.views.blueprint)        

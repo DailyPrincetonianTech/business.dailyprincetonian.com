@@ -15,6 +15,7 @@ def init_app(config_object):
     with app.app_context():
         # Initialize database.
         db.init_app(app)
+        db.create_all()
         
         # Register blueprints.
         app.register_blueprint(home.views.blueprint)        

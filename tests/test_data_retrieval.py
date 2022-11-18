@@ -1,5 +1,5 @@
 from flask_testing import TestCase
-from tests.config import TestingConfiguration
+from tests.config_testing import TestingConfiguration
 from tests.utils import load_dummy_data_advertisements
 
 from app import init_app

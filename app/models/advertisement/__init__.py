@@ -1,15 +1,14 @@
 '''Defines the Advertisement model and its schema.'''
 
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema, auto_field
-import sqlalchemy as sa
 from app.database import db
 
 
 class Advertisement(db.Model):
-    id          = sa.Column(sa.Integer, primary_key = True)
-    title       = sa.Column(sa.String, nullable = False)
-    audience_id = sa.Column(sa.Integer, sa.ForeignKey("audience.id"), nullable = False)
-    clickable   = sa.Column(sa.Boolean, nullable = False)
+    id          = db.Column(db.Integer, primary_key = True)
+    title       = db.Column(db.String, nullable = False)
+    audience_id = db.Column(db.Integer, db.ForeignKey("audience.id"), nullable = False)
+    clickable   = db.Column(db.Boolean, nullable = False)
     
     
 class _AdvertisementSchema(SQLAlchemyAutoSchema):

@@ -42,6 +42,7 @@ class TestAdvertisementService(TestCase):
             "audience_id": 0,
             "option_labels": ["Option 1", "Option 2", "Option 3"],
             "costs": [1.99, 2.99, 3.99],
+            "image_url": "https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png",
             "asterisks": ["Asterisk 1", "Asterisk 2", "Asterisk 3"],
             "popup": None
         }

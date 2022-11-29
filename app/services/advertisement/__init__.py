@@ -16,6 +16,7 @@ class AdvertisementObjectOptions:
     audience_id   : int         # Required.
     option_labels : list[str]   # Required.
     costs         : list[float] # Required.
+    image_url     : str         # Required
     asterisks     : list[str]
     popup         : str
     
@@ -25,6 +26,7 @@ class AdvertisementObjectOptions:
         audience_id   = int(kwargs.get("audience_id")) if kwargs.get("audience_id") is not None else None
         option_labels = []
         costs         = []
+        image_url     = str(kwargs.get("image_url")).strip() if kwargs.get("image_url") else None
         asterisks     = []
         popup         = str(kwargs.get("popup")).strip() if kwargs.get("popup") else None
         
@@ -54,7 +56,7 @@ class AdvertisementObjectOptions:
             raise ValueError("Error parsing options and costs.")
         
         # DTO created by passed-in options. Validation step.
-        dto = cls(title, audience_id, option_labels, costs, asterisks, popup)
+        dto = cls(title, audience_id, option_labels, costs, image_url, asterisks, popup)
         dto.validate()
         return dto
     
@@ -84,6 +86,10 @@ class AdvertisementObjectOptions:
                 float(cost)
             if len(dto.option_labels) != len(dto.costs):
                 raise ValueError("The number of options and costs do not match.")
+            
+            # Image URL must exist and be a non-empty string (i.e. not just whitespace).
+            if not dto.image_url or dto.image_url.strip() == "":
+                raise ValueError("No image URL was provided.")
             
         except AttributeError:
             raise AttributeError("Invalid advertisement object options.")
@@ -131,6 +137,7 @@ def create_advertisement(dto: AdvertisementObjectOptions):
         advertisement = Advertisement(
             title = dto.title,
             audience_id = dto.audience_id,
+            image_url = dto.image_url,
             clickable = dto.popup is not None
         )
         

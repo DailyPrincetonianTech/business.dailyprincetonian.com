@@ -8,6 +8,7 @@ class Advertisement(db.Model):
     id          = db.Column(db.Integer, primary_key = True)
     title       = db.Column(db.String, nullable = False)
     audience_id = db.Column(db.Integer, db.ForeignKey("audience.id"), nullable = False)
+    image_url   = db.Column(db.String, nullable = False)
     clickable   = db.Column(db.Boolean, nullable = False)
     
     

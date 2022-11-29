@@ -50,7 +50,7 @@ def _validateFile(file, errors):
     
     
 def _processFile(file, errors):
-    COLUMN_NAMES = ["audience_id", "advertisement_title", "options", "asterisks", "popup"]
+    COLUMN_NAMES = ["audience_id", "advertisement_title", "options", "asterisks", "popup", "image_url"]
     data = load_workbook(file).worksheets[0]
     
     # Delete all advertisements.

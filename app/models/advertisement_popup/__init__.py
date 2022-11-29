@@ -1,14 +1,13 @@
 '''Defines the AdvertisementPopup model and its schema.'''
 
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-import sqlalchemy as sa
 from app.database import db
 
 
 class AdvertisementPopup(db.Model):
-    id               = sa.Column(sa.Integer, primary_key = True)
-    advertisement_id = sa.Column(sa.Integer, sa.ForeignKey("advertisement.id"), nullable = False)
-    description      = sa.Column(sa.String, nullable = False)
+    id               = db.Column(db.Integer, primary_key = True)
+    advertisement_id = db.Column(db.Integer, db.ForeignKey("advertisement.id"), nullable = False)
+    description      = db.Column(db.String, nullable = False)
     
     
 class _AdvertisementPopupSchema(SQLAlchemyAutoSchema):

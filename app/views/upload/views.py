@@ -2,8 +2,7 @@ from flask import Blueprint, request, render_template, redirect, current_app
 from openpyxl import load_workbook
 
 from app.database import db
-from app.models.advertisement import Advertisement
-from app.services.advertisement import AdvertisementObjectOptions, create_advertisement
+from app.services.advertisement import AdvertisementObjectOptions, create_advertisement, delete_all_advertisements
 
 
 
@@ -54,6 +53,12 @@ def _processFile(file, errors):
     COLUMN_NAMES = ["audience_id", "advertisement_title", "options", "asterisks", "popup"]
     data = load_workbook(file).worksheets[0]
     
+    # Delete all advertisements.
+    # Note that this is not committed yet.
+    delete_errors = delete_all_advertisements()
+    for error in delete_errors:
+        errors.append(error)
+    
     first_row = True
     for row in data.iter_rows():
         # Skip first row as it is the column names,
@@ -71,18 +76,15 @@ def _processFile(file, errors):
         # Create objects from compiled data.
         try:
             dto = AdvertisementObjectOptions.from_excel_schema(**values)
-            _, creation_errors = create_advertisement(dto, True)
-            for error in creation_errors:
+            create_errors = create_advertisement(dto)
+            for error in create_errors:
                     errors.append("Row " + str(row[0].row) + ": " + error)
-                    
         except Exception as e:
-            errors.append(e)
-
-            
-
-    # Errors exist, so return False.
-    if errors:
+            errors.append("Row " + str(row[0].row) + ": " + str(e))
+        
+    # If there are no errors, commit changes to database.
+    if not errors:
+        db.session.commit()
+        return True
+    else:
         return False
-    
-    # File was processed successfully.
-    return True

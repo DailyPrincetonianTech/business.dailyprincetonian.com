@@ -11,11 +11,11 @@ class AdvertisementOption(db.Model):
     cost             = db.Column(db.Float, nullable = False)
     
     
-class _AdvertisementOptionSchema(SQLAlchemyAutoSchema):
+class AdvertisementOptionSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = AdvertisementOption
         load_instance = True
         include_fk = True
 
 # Singleton instance of schema to be imported.
-advertisement_option_schema = _AdvertisementOptionSchema()
+advertisement_option_schema = AdvertisementOptionSchema()

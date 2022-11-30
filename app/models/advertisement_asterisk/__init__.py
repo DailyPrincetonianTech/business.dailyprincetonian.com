@@ -9,12 +9,11 @@ class AdvertisementAsterisk(db.Model):
     advertisement_id = db.Column(db.Integer, db.ForeignKey("advertisement.id"), nullable = False)
     label            = db.Column(db.String, nullable = False)
     
-    
-class _AdvertisementAsteriskSchema(SQLAlchemyAutoSchema):
+class AdvertisementAsteriskSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = AdvertisementAsterisk
         load_instance = True
         include_fk = True
 
 # Singleton instance of schema to be imported.
-advertisement_asterisk_schema = _AdvertisementAsteriskSchema()
+advertisement_asterisk_schema = AdvertisementAsteriskSchema()

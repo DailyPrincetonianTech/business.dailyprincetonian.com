@@ -10,11 +10,11 @@ class AdvertisementPopup(db.Model):
     description      = db.Column(db.String, nullable = False)
     
     
-class _AdvertisementPopupSchema(SQLAlchemyAutoSchema):
+class AdvertisementPopupSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = AdvertisementPopup
         load_instance = True
         include_fk = True
 
 # Singleton instance of schema to be imported.
-advertisement_popup_schema = _AdvertisementPopupSchema()
+advertisement_popup_schema = AdvertisementPopupSchema()

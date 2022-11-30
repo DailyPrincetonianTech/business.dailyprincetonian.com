@@ -9,10 +9,10 @@ class Audience(db.Model):
     name = db.Column(db.String, nullable = False)
     
     
-class _AudienceSchema(SQLAlchemyAutoSchema):
+class AudienceSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = Audience
         load_instance = True
 
 # Singleton instance of schema to be imported.
-audience_schema = _AudienceSchema()
+audience_schema = AudienceSchema()

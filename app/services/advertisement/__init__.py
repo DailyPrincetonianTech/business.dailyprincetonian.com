@@ -8,6 +8,8 @@ from app.models.advertisement import Advertisement
 from app.models.advertisement_option import AdvertisementOption
 from app.models.advertisement_asterisk import AdvertisementAsterisk
 from app.models.advertisement_popup import AdvertisementPopup
+from app.models.advertisement import advertisement_schema
+
 
 
 @define
@@ -96,6 +98,16 @@ class AdvertisementObjectOptions:
         except ValueError as e:
             raise ValueError(e)
         
+
+
+def get_all_advertisements_by_audience_id(audience_id):
+    advertisements = advertisement_schema.dump(
+        Advertisement.query.filter_by(audience_id = audience_id).all(),
+        many = True
+    )
+    
+    return advertisements
+
 
 
 def create_advertisement(dto: AdvertisementObjectOptions):

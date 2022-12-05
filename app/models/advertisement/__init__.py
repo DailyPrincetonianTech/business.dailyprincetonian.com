@@ -22,7 +22,7 @@ class Advertisement(db.Model):
     
 class AdvertisementSchema(SQLAlchemyAutoSchema):
     # Constituent models.
-    options   = fields.Nested(AdvertisementOptionSchema(only = ["label"]), many = True)
+    options   = fields.Nested(AdvertisementOptionSchema(only = ["label", "cost"]), many = True)
     asterisks = fields.Nested(AdvertisementAsteriskSchema(only = ["label"]), many = True)
     popup     = fields.Nested(AdvertisementPopupSchema(only = ["description"]), many = False)
     

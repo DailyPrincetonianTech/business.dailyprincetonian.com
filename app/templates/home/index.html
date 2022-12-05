@@ -8,12 +8,97 @@
         <link rel="stylesheet" href="https://use.typekit.net/gkx8zdh.css">
         <link rel="stylesheet" type="text/css" href="styles.css">
         <link rel="stylesheet" type="text/css" href="queries.css">
+        <link href="https://css.gg/info.css" rel="stylesheet">
+        <script src="https://unpkg.com/@popperjs/core@2" crossorigin="anonymous"></script>
         <link rel="icon" href="https://assets.dailyprincetonian.com/common/tiger-black-on-white-small.png"
             type="image/gif">
         <title>Media Kit | The Princetonian</title>
+
+        <script>
+            const advertisementIdToPopupDescription = {};
+            let popper = null;
+
+            function showAdvertismentPopup(advertisementId) {
+                document.querySelector("#advertisement-popup").style.display = "block";
+                if (popper) popper.destroy();
+                
+                document.querySelector("#advertisement-popup > p").innerHTML = advertisementIdToPopupDescription[advertisementId].replaceAll("\n", "<br>");
+
+                popper = Popper.createPopper(
+                    document.querySelector(`.advertisement${advertisementId}-popup-button`), 
+                    document.querySelector("#advertisement-popup"),
+                    {
+                        placement: "top-end",
+                        modifiers: [
+                            {
+                                name: "offset",
+                                options: {
+                                    offset: [0, 26],
+                                },
+                            },
+                        ]}
+                );
+            }
+
+            function hideAdvertisementPop() {
+                document.querySelector("#advertisement-popup").style.display = "none";
+            }
+
+            function zoomIntoPicture(event) {
+                // Hide original image.
+                event.target.style.opacity = "0";
+
+                const zoomedImage = document.createElement("img");
+                zoomedImage.classList.add("zoomed-image");
+                zoomedImage.src = event.target.src;
+                zoomedImage.style.top = event.target.getBoundingClientRect().top + "px";
+                zoomedImage.style.left = event.target.getBoundingClientRect().left + "px";
+                zoomedImage.style.width = event.target.getBoundingClientRect().width + "px";                
+                zoomedImage.style.height = event.target.getBoundingClientRect().height + "px";                
+                zoomedImage.addEventListener("click", () => {
+                    zoomedImage.remove();
+                    event.target.style.opacity = "1";
+                });
+                
+                // Prevent clicking on screen while zooming in.
+                document.querySelector("#screen-overlay").style.pointerEvents = "all";
+
+                // Zoom into image.
+                setTimeout(() => {
+                    zoomedImage.style.top = "0";
+                    zoomedImage.style.left = "0";
+                    zoomedImage.style.width = "100vw";
+                    zoomedImage.style.height = "100vh";
+                }, 0);
+
+                // Allow clicking again after zooming in is finished.
+                setTimeout(() => {
+                    document.querySelector("#screen-overlay").style.pointerEvents = "none";
+                }, 750);
+
+                document.body.append(zoomedImage);
+            }
+
+            function showAdvertisementsForAudienceId(audienceId) {
+                document.querySelectorAll(".advertisements-card-container").forEach((element) => {
+                    element.setAttribute("hidden", "");
+                });
+
+                document.querySelector(`.audience${audienceId}`).removeAttribute("hidden");
+                document.querySelector(".rates--select--container").scrollIntoView();
+
+
+                // Hardcoded.
+                if (audienceId == 3)
+                    document.querySelector(".rates--container--recruiter--plus").removeAttribute("hidden");
+            }
+        </script>
     </head>
 
     <body>
+        <div id="screen-overlay"></div>
+        <div id="advertisement-popup"><p style="font-size: 16px;"></p><div id="advertisement-popup-arrow" data-popper-arrow></div></div>
+
         <navbar>
             <div class="navbar--top">
                 <div class="navbar--tag"><a href="#top"><img
@@ -287,24 +372,11 @@
                             class="meet--card--img"><span class="meet--card--stat">&nbsp;8%</span> conservative<br>
                     </div>
                 </div>
-                <!--
-                <div class="meet--card">
-                    <div class="meet--card--innershell">
-                        <span class="meet--card--stat">75%</span>
-                        <br>
-                        fraction of students scored at or above 98<sup>th</sup> percentile on SATs.
-                    </div>
-                </div>
--->
-                <!--
-                <div class="meet--card">
-                    <div class="meet--card--innershell">
-                        <span class="meet--card--stat">3.46</span>
-                        <br>
-                        average high school GPA among Princeton students
-                    </div>
-                </div>
--->
+
+
+
+
+
             </div>
             <div class="meet--charts">
                 <div class="meet--chart">
@@ -372,1202 +444,18 @@
                     clicks.
                 </div>
                 <div>I am a</div>
-                <select class="rates--select">
-                    <option hidden selected disabled value class="rates--select--option">-- select an option --</option>
-                    <option class="rates--select--option">Princeton Student or Organization</option>
-                    <option class="rates--select--option">Local Advertiser (Mercer County)</option>
-                    <option class="rates--select--option">National Advertiser</option>
-                    <option class="rates--select--option">Recruiter</option>
+                <select class="rates--select" onchange="showAdvertisementsForAudienceId(this.selectedIndex - 1)">
+                    <option hidden selected disabled value class="rates--select--option">—— Select an Option ——</option>
+                    {% for audience in audiences %}
+                    <option value="{{ audience }}" class="rates--select--option" id="rates__audience{{ audience.id }}">{{ audience.name }}</option>
+                    {% endfor %}
                 </select>
             </div>
 
-            <div class="rates--container" id="rates--container--student">
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-1">
-                        <div class="rates--type">Website Billboard</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$75.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$67.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-2">
-                        <div class="rates--type">Website Skyscraper</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$90.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$81.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$72.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-3">
-                        <div class="rates--type">Website Box</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$90.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$81.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$72.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-breaking-news.png" alt="email headline preview" />
-        <div class="rates--card rates--card-4">
-          <div class="rates--type">Breaking News Email Reservation</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Email...</div>
-            <div class="rates--cost">$40</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">3+ Emails...</div>
-            <div class="rates--cost">$35</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Emails...</div>
-            <div class="rates--cost">$30</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** Prices are per email.</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-header.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-4">
-                        <div class="rates--type">Email Headline</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Days...</div>
-                            <div class="rates--cost">$54.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">15+ Days...</div>
-                            <div class="rates--cost">$48.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per email.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-in-article-ad.png" alt="email headline preview" />
-        <div class="rates--card rates--card-7">
-          <div class="rates--type">Email In-Article</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Day...</div>
-            <div class="rates--cost">$35</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Week...</div>
-            <div class="rates--cost">$155</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Month...</div>
-            <div class="rates--cost">$555</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-5">
-                        <div class="rates--type">Facebook Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$54.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$48.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png" alt="email headline preview" />
-        <div class="rates--card rates--card-6">
-          <div class="rates--type">Facebook Story</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Post...</div>
-            <div class="rates--cost">$15</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Posts...</div>
-            <div class="rates--cost">$14</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">10+ Posts...</div>
-            <div class="rates--cost">$13</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-          <div class="asterisk">*** Prices are per post.</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-6">
-                        <div class="rates--type">Instagram Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$75.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$67.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-7">
-                        <div class="rates--type">Instagram Story</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$50.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-8">
-                        <div class="rates--type">Twitter Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$75.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$67.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/youtube.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-9">
-                        <div class="rates--type">YouTube Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Video...</div>
-                            <div class="rates--cost">$30.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Videos...</div>
-                            <div class="rates--cost">$27.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Videos...</div>
-                            <div class="rates--cost">$24.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per video.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/podcast.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-10">
-                        <div class="rates--type">Podcast Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Podcast...</div>
-                            <div class="rates--cost">$15.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Podcasts...</div>
-                            <div class="rates--cost">$13.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Podcasts...</div>
-                            <div class="rates--cost">$12.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per podcast.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/crossword-ad.png"
-                        alt="crossword preview" />
-                    <div class="rates--card rates--card-11">
-                        <div class="rates--type">Crossword Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$135.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per week.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-12 rates--card--noclick">
-                        <div class="rates--type">Print Full Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$595</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$2545</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$8985</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-13 rates--card--noclick">
-                        <div class="rates--type">Print Half Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$325</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$1395</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$4935</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-14 rates--card--noclick">
-                        <div class="rates--type">Print Quarter Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$175</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$745</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$2685</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $40</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/eighth.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-15 rates--card--noclick">
-                        <div class="rates--type">Print Eighth Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$95</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$415</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$1485</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $20</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/front-bottom.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-16 rates--card--noclick">
-                        <div class="rates--type">Print Front Page Bottom</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$145</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$625</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$2235</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-            </div>
+            
 
-            <div class="rates--container" id="rates--container--local">
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-1">
-                        <div class="rates--type">Website Billboard</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$50.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-2">
-                        <div class="rates--type">Website Skyscraper</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$54.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$48.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-3">
-                        <div class="rates--type">Website Box</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$54.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$48.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-breaking-news.png" alt="email headline preview" />
-        <div class="rates--card rates--card-4">
-          <div class="rates--type">Breaking News Email Reservation</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Email...</div>
-            <div class="rates--cost">$30</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">3+ Emails...</div>
-            <div class="rates--cost">$26.25</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Emails...</div>
-            <div class="rates--cost">$22.50</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** Prices are per email.</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-header.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-4">
-                        <div class="rates--type">Email Headline</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$35.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Days...</div>
-                            <div class="rates--cost">$31.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">15+ Days...</div>
-                            <div class="rates--cost">$28.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per email.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-in-article-ad.png" alt="email headline preview" />
-        <div class="rates--card rates--card-7">
-          <div class="rates--type">Email In-Article</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Day...</div>
-            <div class="rates--cost">$25</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Week...</div>
-            <div class="rates--cost">$115</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Month...</div>
-            <div class="rates--cost">$395</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-5">
-                        <div class="rates--type">Facebook Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png" alt="email headline preview" />
-        <div class="rates--card rates--card-6">
-          <div class="rates--type">Facebook Story</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Post...</div>
-            <div class="rates--cost">$10</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Posts...</div>
-            <div class="rates--cost">$9.33</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">10+ Posts...</div>
-            <div class="rates--cost">$8.67</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-          <div class="asterisk">*** Prices are per post.</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-6">
-                        <div class="rates--type">Instagram Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$50.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-7">
-                        <div class="rates--type">Instagram Story</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$35.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$31.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$28.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-8">
-                        <div class="rates--type">Twitter Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$50.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/youtube.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-9">
-                        <div class="rates--type">YouTube Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Video...</div>
-                            <div class="rates--cost">$20.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Videos...</div>
-                            <div class="rates--cost">$18.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Videos...</div>
-                            <div class="rates--cost">$16.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per video.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/podcast.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-10">
-                        <div class="rates--type">Podcast Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Podcast...</div>
-                            <div class="rates--cost">$10.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Podcasts...</div>
-                            <div class="rates--cost">$9.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Podcasts...</div>
-                            <div class="rates--cost">$8.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per podcast.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/crossword-ad.png"
-                        alt="crossword preview" />
-                    <div class="rates--card rates--card-11">
-                        <div class="rates--type">Crossword Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$100.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$90.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per week.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-12 rates--card--noclick">
-                        <div class="rates--type">Print Full Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$595</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$2545</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$8985</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-13 rates--card--noclick">
-                        <div class="rates--type">Print Half Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$325</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$1395</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$4935</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-14 rates--card--noclick">
-                        <div class="rates--type">Print Quarter Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$175</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$745</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$2685</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $40</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/eighth.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-15 rates--card--noclick">
-                        <div class="rates--type">Print Eighth Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$95</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$415</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$1485</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $20</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/front-bottom.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-16 rates--card--noclick">
-                        <div class="rates--type">Print Front Page Bottom</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$145</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$625</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$2235</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-            </div>
 
-            <div class="rates--container" id="rates--container--national">
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-1">
-                        <div class="rates--type">Website Billboard</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$135.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$120.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-2">
-                        <div class="rates--type">Website Skyscraper</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$180.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$165.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-3">
-                        <div class="rates--type">Website Box</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$180.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$165.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per day.</div>
-                    </div>
-                </div>
-                <!--
-      <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-breaking-news.png" alt="email headline preview" />
-        <div class="rates--card rates--card-4">
-          <div class="rates--type">Breaking News Email Reservation</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Email...</div>
-            <div class="rates--cost">$60</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">3+ Emails...</div>
-            <div class="rates--cost">$52.50</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Emails...</div>
-            <div class="rates--cost">$45</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** Prices are per email.</div>
-        </div>
-      </div>
-    -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-header.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-4">
-                        <div class="rates--type">Email Headline</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Day...</div>
-                            <div class="rates--cost">$75.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Days...</div>
-                            <div class="rates--cost">$67.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">15+ Days...</div>
-                            <div class="rates--cost">$60.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per email.</div>
-                    </div>
-                </div>
-                <!-- <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-in-article-ad.png" alt="email headline preview" />
-        <div class="rates--card rates--card-7">
-          <div class="rates--type">Email In-Article</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Day...</div>
-            <div class="rates--cost">$50</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Week...</div>
-            <div class="rates--cost">$245</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">Month...</div>
-            <div class="rates--cost">$875</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-        </div>
-      </div> -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-5">
-                        <div class="rates--type">Facebook Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$120.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$108.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$96.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <!--
-      <div class="rates--card--container">
-        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png" alt="email headline preview" />
-        <div class="rates--card rates--card-6">
-          <div class="rates--type">Facebook Story</div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">1 Post...</div>
-            <div class="rates--cost">$30</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">5+ Posts...</div>
-            <div class="rates--cost">$28</div>
-          </div>
-          <div class="rates--subtype--container" horizontal>
-            <div class="rates--subtype">10+ Posts...</div>
-            <div class="rates--cost">$26</div>
-          </div>
-          <div class="asterisk">* Graphic Design $65</div>
-          <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-          <div class="asterisk">*** Prices are per post.</div>
-        </div>
-      </div>
-    -->
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-6">
-                        <div class="rates--type">Instagram Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$135.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$120.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-7">
-                        <div class="rates--type">Instagram Story</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$100.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$90.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$80.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-8">
-                        <div class="rates--type">Twitter Post</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Post...</div>
-                            <div class="rates--cost">$150.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">5+ Posts...</div>
-                            <div class="rates--cost">$135.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">10+ Posts...</div>
-                            <div class="rates--cost">$120.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                        <div class="asterisk">*** Prices are per post.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/youtube.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-9">
-                        <div class="rates--type">YouTube Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 video...</div>
-                            <div class="rates--cost">$50.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Videos...</div>
-                            <div class="rates--cost">$45.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Videos...</div>
-                            <div class="rates--cost">$40.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per video.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/podcast.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-10">
-                        <div class="rates--type">Podcast Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">1 Podcast...</div>
-                            <div class="rates--cost">$25.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">2+ Podcasts...</div>
-                            <div class="rates--cost">$22.50</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">4+ Podcasts...</div>
-                            <div class="rates--cost">$20.00</div>
-                        </div>
-                        <div class="asterisk">* Media Design $90</div>
-                        <div class="asterisk">** Prices are per podcast.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/crossword-ad.png"
-                        alt="crossword preview" />
-                    <div class="rates--card rates--card-11">
-                        <div class="rates--type">Crossword Ad</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$250.00</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$225.00</div>
-                        </div>
-                        <div class="asterisk">* Graphic Design $65</div>
-                        <div class="asterisk">** Prices are per week.</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-12 rates--card--noclick">
-                        <div class="rates--type">Print Full Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$775</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$3295</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$11675</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-13 rates--card--noclick">
-                        <div class="rates--type">Print Half Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$425</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$1815</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$6415</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-14 rates--card--noclick">
-                        <div class="rates--type">Print Quarter Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$225</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$985</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$3485</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $40</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/eighth.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-15 rates--card--noclick">
-                        <div class="rates--type">Print Eighth Page</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$125</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$545</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$1925</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $20</div>
-                    </div>
-                </div>
-                <div class="rates--card--container">
-                    <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/front-bottom.png"
-                        alt="email headline preview" />
-                    <div class="rates--card rates--card-16 rates--card--noclick">
-                        <div class="rates--type">Print Front Page Bottom</div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Day...</div>
-                            <div class="rates--cost">$195</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Week...</div>
-                            <div class="rates--cost">$845</div>
-                        </div>
-                        <div class="rates--subtype--container" horizontal>
-                            <div class="rates--subtype">Month...</div>
-                            <div class="rates--cost">$2985</div>
-                        </div>
-                        <div class="asterisk">* Color Premium is $50</div>
-                    </div>
-                </div>
-            </div>
-
-            <div id="rates--container--recruiter--plus">
+            <div class="advertisements-card-container rates--container--recruiter--plus" hidden>
 
                 <div class="rates--recruiter--text" id="rates--recruiter--text">
                     <h3>Fall Recruiting Calendar</h3>
@@ -1627,417 +515,72 @@
                         <b>25% off</b> Email Newsletter, Website, Social Medias
                     </div>
                 </div>
+            </div>
 
-                <div class="rates--container" id="rates--container--recruiter">
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-leaderboard.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-1">
-                            <div class="rates--type">Website Billboard</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$150.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$135.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$120.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** Prices are per day.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-skyscraper.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-2">
-                            <div class="rates--type">Website Skyscraper</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$180.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$165.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$150.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** Prices are per day.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/web-block.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-3">
-                            <div class="rates--type">Website Box</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$180.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$165.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$150.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** Prices are per day.</div>
-                        </div>
-                    </div>
-                    <!--
-          <div class="rates--card--container">
-            <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-breaking-news.png" alt="email headline preview" />
-            <div class="rates--card rates--card-4">
-              <div class="rates--type">Breaking News Email Reservation</div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">1 Email...</div>
-                <div class="rates--cost">$60</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">3+ Emails...</div>
-                <div class="rates--cost">$52.50</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">5+ Emails...</div>
-                <div class="rates--cost">$45</div>
-              </div>
-              <div class="asterisk">* Graphic Design $65</div>
-              <div class="asterisk">** Prices are per email.</div>
-            </div>
-          </div>
-        -->
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-header.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-4">
-                            <div class="rates--type">Email Headline</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Day...</div>
-                                <div class="rates--cost">$75.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">5+ Days...</div>
-                                <div class="rates--cost">$67.50</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">15+ Days...</div>
-                                <div class="rates--cost">$60.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** Prices are per email.</div>
-                        </div>
-                    </div>
-                    -->
-                    <!-- <div class="rates--card--container">
-            <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/email-in-article-ad.png" alt="email headline preview" />
-            <div class="rates--card rates--card-7">
-              <div class="rates--type">Email In-Article</div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">Day...</div>
-                <div class="rates--cost">$50</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">Week...</div>
-                <div class="rates--cost">$245</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">Month...</div>
-                <div class="rates--cost">$875</div>
-              </div>
-              <div class="asterisk">* Graphic Design $65</div>
-            </div>
-          </div> -->
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-5">
-                            <div class="rates--type">Facebook Post</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Post...</div>
-                                <div class="rates--cost">$120.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">5+ Posts...</div>
-                                <div class="rates--cost">$108.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">10+ Posts...</div>
-                                <div class="rates--cost">$96.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                            <div class="asterisk">*** Prices are per post.</div>
-                        </div>
-                    </div>
-                    <!--
-          <div class="rates--card--container">
-            <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook-preview.png" alt="email headline preview" />
-            <div class="rates--card rates--card-6">
-              <div class="rates--type">Facebook Story</div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">1 Post...</div>
-                <div class="rates--cost">$30</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">5+ Posts...</div>
-                <div class="rates--cost">$28</div>
-              </div>
-              <div class="rates--subtype--container" horizontal>
-                <div class="rates--subtype">10+ Posts...</div>
-                <div class="rates--cost">$26</div>
-              </div>
-              <div class="asterisk">* Graphic Design $65</div>
-              <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-              <div class="asterisk">*** Prices are per post.</div>
-            </div>
-          </div>
-        -->
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-6">
-                            <div class="rates--type">Instagram Post</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Post...</div>
-                                <div class="rates--cost">$150.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">5+ Posts...</div>
-                                <div class="rates--cost">$135.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">10+ Posts...</div>
-                                <div class="rates--cost">$120.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                            <div class="asterisk">*** Prices are per post.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig-preview.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-7">
-                            <div class="rates--type">Instagram Story</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Post...</div>
-                                <div class="rates--cost">$100.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">5+ Posts...</div>
-                                <div class="rates--cost">$90.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">10+ Posts...</div>
-                                <div class="rates--cost">$80.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                            <div class="asterisk">*** Prices are per post.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter-preview.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-8">
-                            <div class="rates--type">Twitter Post</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Post...</div>
-                                <div class="rates--cost">$150.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">5+ Posts...</div>
-                                <div class="rates--cost">$135.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">10+ Posts...</div>
-                                <div class="rates--cost">$120.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** We only post every other day if you purchase multiple posts.</div>
-                            <div class="asterisk">*** Prices are per post.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/youtube.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-9">
-                            <div class="rates--type">YouTube Ad</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 video...</div>
-                                <div class="rates--cost">$50.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">2+ Videos...</div>
-                                <div class="rates--cost">$45.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">4+ Videos...</div>
-                                <div class="rates--cost">$40.00</div>
-                            </div>
-                            <div class="asterisk">* Media Design $90</div>
-                            <div class="asterisk">** Prices are per video.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/podcast.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-10">
-                            <div class="rates--type">Podcast Ad</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">1 Podcast...</div>
-                                <div class="rates--cost">$25.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">2+ Podcasts...</div>
-                                <div class="rates--cost">$22.50</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">4+ Podcasts...</div>
-                                <div class="rates--cost">$20.00</div>
-                            </div>
-                            <div class="asterisk">* Media Design $90</div>
-                            <div class="asterisk">** Prices are per podcast.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/crossword-ad.png"
-                            alt="crossword preview" />
-                        <div class="rates--card rates--card-11">
-                            <div class="rates--type">Crossword Ad</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$250.00</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$225.00</div>
-                            </div>
-                            <div class="asterisk">* Graphic Design $65</div>
-                            <div class="asterisk">** Prices are per week.</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/full.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-12 rates--card--noclick">
-                            <div class="rates--type">Print Full Page</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$775</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$3295</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$11675</div>
-                            </div>
-                            <div class="asterisk">* Color Premium is $50</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/half.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-13 rates--card--noclick">
-                            <div class="rates--type">Print Half Page</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$425</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$1815</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$6415</div>
-                            </div>
-                            <div class="asterisk">* Color Premium is $50</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/quarter.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-14 rates--card--noclick">
-                            <div class="rates--type">Print Quarter Page</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$225</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$985</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$3485</div>
-                            </div>
-                            <div class="asterisk">* Color Premium is $40</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/eighth.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-16 rates--card--noclick">
-                            <div class="rates--type">Print Eighth Page</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$125</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$545</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$1925</div>
-                            </div>
-                            <div class="asterisk">* Color Premium is $20</div>
-                        </div>
-                    </div>
-                    <div class="rates--card--container">
-                        <img src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/front-bottom.png"
-                            alt="email headline preview" />
-                        <div class="rates--card rates--card-16 rates--card--noclick">
-                            <div class="rates--type">Print Front Page Bottom</div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Day...</div>
-                                <div class="rates--cost">$195</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Week...</div>
-                                <div class="rates--cost">$845</div>
-                            </div>
-                            <div class="rates--subtype--container" horizontal>
-                                <div class="rates--subtype">Month...</div>
-                                <div class="rates--cost">$2985</div>
-                            </div>
-                            <div class="asterisk">* Color Premium is $50</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-        <div id="myModal" class="Modal is-hidden is-visuallyHidden">
-            <!-- Modal content -->
-            <div class="Modal-content">
-                <span id="closeModal" class="Close">&times;</span>
-                <h4 id="modal--header"></h4>
-                <br>
-                <span id="modal--descrip"></span>
+
+
+            <div class="advertisements-container">
+
+                <!-- Advertisement Card Containers by Audiences -->
+                {% for audience_id in range(advertisements|length) %}
+                    <div class="advertisements-card-container audience{{ audience_id }}" hidden>
+    
+                        <!-- Advertisement Cards -->
+                        {% for advertisement in advertisements[audience_id] %}
+                            <div class="advertisements-container__card">
+                                <div class="advertisements-container__card__image">
+                                    <img src="{{ advertisement.image_url }}" onclick="zoomIntoPicture(event)">
+                                </div>
+                                
+                                <div class="advertisements-container__card__info">
+                                    <!-- Title -->
+                                    <div class="advertisement-container__card__title">
+                                        <h3>{{ advertisement.title }}</h3>
+    
+                                        <!-- Additional Information if Clickable -->
+                                        {% if advertisement.clickable %}
+                                            <script>
+                                                advertisementIdToPopupDescription["{{ advertisement.id }}"] = "{{ advertisement.popup.description | e | replace('\n', '\\n') }} ";
+                                            </script>
+    
+                                            <i class="gg-info advertisement{{ advertisement.id }}-popup-button"
+                                               onmouseenter="showAdvertismentPopup('{{ advertisement.id }}')"
+                                               onmouseleave="hideAdvertisementPop()">
+                                            </i>
+                                        {% endif %}
+                                    </div>
+    
+                                    <!-- Options -->
+                                    {% for option in advertisement.options %}
+                                        <div class="advertisement-container__card__options">
+                                            <p>{{ option.label }}</p>
+                                            <p>{{ "${:,.2f}".format(option.cost) }}</p>
+                                        </div>
+                                    {% endfor %}
+    
+                                    <!-- Asterisks -->
+                                    {% if advertisement.asterisks %}
+                                        <div class="advertisement-container__card__asterisks">
+                                            <ul>
+                                                {% for asterisk in advertisement.asterisks %}
+                                                    <li>{{ asterisk.label }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+                                    {% endif %}
+                                </div>
+    
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
             </div>
-        </div>
+
+
+
+
+            
 
         <!-- SUBMIT    -->
         <div class="submit section" id="submit">
@@ -2067,87 +610,9 @@
             </div>
         </div>
 
-        <!-- FOOTER    -->
-        <div class="footer section">
-            <div class="footer--row">
-                <div class="footer--logo">
-                    <img src="https://assets.dailyprincetonian.com/common/tiger-black-on-white.png">
-                    <div class="footer--button"><a href="http://eepurl.com/GveCn">SUBSCRIBE</a></div>
-                </div>
-                <ul>
-                    <li><b><a href="https://www.dailyprincetonian.com/section/news">NEWS</a></b></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/u-affairs">U. Affairs</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/student-life">Student Life</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/grad-school">Grad School</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/local">Town</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/alumni">Alumni</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/qa">Q&amp;A</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/activism">Activism</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/usg">USG</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/research">Research</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/academics">Academics</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/obituaries">Obituaries</a></li>
-                </ul>
-                <ul>
-                    <li><b><a href="https://www.dailyprincetonian.com/section/sports">SPORTS</a></b></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/sports-recaps">Recaps</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/sports-previews">Previews</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/sports-profiles">Profiles</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/on-tap">On Tap</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/sports-insidelook">Inside Looks</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/sports-columns">Columns</a></li>
-                    <li><b><a href="https://www.dailyprincetonian.com/section/prospect">THE PROSPECT</a></b></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/arts">Arts</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/culture">Culture</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/self">Self</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/dispatches">Dispatches</a></li>
-                </ul>
-                <ul>
-                    <li><b><a href="https://www.dailyprincetonian.com/section/opinion">OPINION</a></b></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/columns">Column</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/letter-to-the-editor">Letter to the
-                            Editor</a>
-                    </li>
-                    <li><a href="https://www.dailyprincetonian.com/section/opinion-guest">Guest Submission</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/opinion-open">Open Letter</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/editorial">Editorial</a></li>
-                    <li><b><a href="https://www.dailyprincetonian.com/section/special">PROJECTS</a></b></li>
-                    <li><a
-                            href="https://www.dailyprincetonian.com/section/how-women-became-tigers">#HowWomenBecameTigers</a>
-                    </li>
-                    <li><a href="https://www.dailyprincetonian.com/section/power-of-a-united-people">Power of a United
-                            People</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/section/in-the-nations-service">In the Nation's
-                            Service</a></li>
-                </ul>
-                <ul>
-                    <li><b><a href="https://www.dailyprincetonian.com/multimedia">MULTIMEDIA</a></b></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/masthead">Masthead</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/contact">Contact Us</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/advertise">Advertise</a></li>
-                    <li><a href="https://theprince.princeton.edu/">Archives</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/submit">Submit a Tip</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/donate-to-the-daily-princetonian">Donate</a>
-                    </li>
-                    <li><a href="https://www.dailyprincetonian.com/page/privacy">Privacy</a></li>
-                    <li><a href="https://www.dailyprincetonian.com/page/terms-and-conditions">Terms</a></li>
-                    <li><b><a href="#">FOLLOW</a></b></li>
-                    <li><a href="https://www.facebook.com/DailyPrincetonian"><img
-                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook.png"></a><a
-                            href="https://www.instagram.com/dailyprincetonian/"><img
-                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig.png"></a>
-                    </li>
-                    <li><a href="https://twitter.com/princetonian"><img
-                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter.png"></a><a
-                            href="https://open.spotify.com/show/5xeaopGvoY0teJn0atpNPM"><img
-                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/spotify.png"></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="Modal.js"></script>
         <script src="FallIssue.js"></script>
         <script>
             // NAVBAR
@@ -2244,6 +709,88 @@
                 })
             }
         </script>
+
+
+
+        <!-- FOOTER    -->
+        <div class="footer section">
+            <div class="footer--row">
+                <div class="footer--logo">
+                    <img src="https://assets.dailyprincetonian.com/common/tiger-black-on-white.png">
+                    <div class="footer--button"><a href="http://eepurl.com/GveCn">SUBSCRIBE</a></div>
+                </div>
+                <ul>
+                    <li><b><a href="https://www.dailyprincetonian.com/section/news">NEWS</a></b></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/u-affairs">U. Affairs</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/student-life">Student Life</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/grad-school">Grad School</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/local">Town</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/alumni">Alumni</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/qa">Q&amp;A</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/activism">Activism</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/usg">USG</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/research">Research</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/academics">Academics</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/obituaries">Obituaries</a></li>
+                </ul>
+                <ul>
+                    <li><b><a href="https://www.dailyprincetonian.com/section/sports">SPORTS</a></b></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/sports-recaps">Recaps</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/sports-previews">Previews</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/sports-profiles">Profiles</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/on-tap">On Tap</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/sports-insidelook">Inside Looks</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/sports-columns">Columns</a></li>
+                    <li><b><a href="https://www.dailyprincetonian.com/section/prospect">THE PROSPECT</a></b></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/arts">Arts</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/culture">Culture</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/self">Self</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/dispatches">Dispatches</a></li>
+                </ul>
+                <ul>
+                    <li><b><a href="https://www.dailyprincetonian.com/section/opinion">OPINION</a></b></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/columns">Column</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/letter-to-the-editor">Letter to the
+                            Editor</a>
+                    </li>
+                    <li><a href="https://www.dailyprincetonian.com/section/opinion-guest">Guest Submission</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/opinion-open">Open Letter</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/editorial">Editorial</a></li>
+                    <li><b><a href="https://www.dailyprincetonian.com/section/special">PROJECTS</a></b></li>
+                    <li><a
+                            href="https://www.dailyprincetonian.com/section/how-women-became-tigers">#HowWomenBecameTigers</a>
+                    </li>
+                    <li><a href="https://www.dailyprincetonian.com/section/power-of-a-united-people">Power of a United
+                            People</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/section/in-the-nations-service">In the Nation's
+                            Service</a></li>
+                </ul>
+                <ul>
+                    <li><b><a href="https://www.dailyprincetonian.com/multimedia">MULTIMEDIA</a></b></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/masthead">Masthead</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/contact">Contact Us</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/advertise">Advertise</a></li>
+                    <li><a href="https://theprince.princeton.edu/">Archives</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/submit">Submit a Tip</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/donate-to-the-daily-princetonian">Donate</a>
+                    </li>
+                    <li><a href="https://www.dailyprincetonian.com/page/privacy">Privacy</a></li>
+                    <li><a href="https://www.dailyprincetonian.com/page/terms-and-conditions">Terms</a></li>
+                    <li><b><a href="#">FOLLOW</a></b></li>
+                    <li><a href="https://www.facebook.com/DailyPrincetonian"><img
+                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/facebook.png"></a><a
+                            href="https://www.instagram.com/dailyprincetonian/"><img
+                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/ig.png"></a>
+                    </li>
+                    <li><a href="https://twitter.com/princetonian"><img
+                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/twitter.png"></a><a
+                            href="https://open.spotify.com/show/5xeaopGvoY0teJn0atpNPM"><img
+                                src="https://assets.dailyprincetonian.com/business.dailyprincetonian.com/spotify.png"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
 
     </body>
 

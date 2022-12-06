@@ -51,7 +51,7 @@ def _validateFile(file, errors):
     
 def _processFile(file, errors):
     COLUMN_NAMES = ["audience_id", "advertisement_title", "options", "asterisks", "popup", "image_url"]
-    data = load_workbook(file).worksheets[0]
+    worksheets = load_workbook(file).worksheets
     
     # Delete all advertisements.
     # Note that this is not committed yet.
@@ -59,29 +59,30 @@ def _processFile(file, errors):
     for error in delete_errors:
         errors.append(error)
     
-    first_row = True
-    for row in data.iter_rows():
-        # Skip first row as it is the column names,
-        # or if the row is empty.
-        if first_row or row[0].value is None:
-            first_row = False
-            continue
-        
-        # Compile row data.
-        values = {}
-        for cell in row:
-            if cell.value is not None:
-                values[COLUMN_NAMES[cell.column - 1]] = cell.value
-        
-        # Create objects from compiled data.
-        try:
-            dto = AdvertisementObjectOptions.from_excel_schema(**values)
-            create_errors = create_advertisement(dto)
-            for error in create_errors:
-                    errors.append("Row " + str(row[0].row) + ": " + error)
-        except Exception as e:
-            errors.append("Row " + str(row[0].row) + ": " + str(e))
-        
+    for worksheet in worksheets:
+        first_row = True
+        for row in worksheet.iter_rows():
+            # Skip first row as it is the column names,
+            # or if the row is empty.
+            if first_row or row[0].value is None:
+                first_row = False
+                continue
+            
+            # Compile row data.
+            values = {}
+            for cell in row:
+                if cell.value is not None:
+                    values[COLUMN_NAMES[cell.column - 1]] = cell.value
+            
+            # Create objects from compiled data.
+            try:
+                dto = AdvertisementObjectOptions.from_excel_schema(**values)
+                create_errors = create_advertisement(dto)
+                for error in create_errors:
+                        errors.append("Row " + str(row[0].row) + ": " + error)
+            except Exception as e:
+                errors.append("Row " + str(row[0].row) + ": " + str(e))
+            
     # If there are no errors, commit changes to database.
     if not errors:
         db.session.commit()

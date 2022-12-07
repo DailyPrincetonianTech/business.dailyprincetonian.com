@@ -50,20 +50,19 @@
 
                 const zoomedImage = document.createElement("img");
                 zoomedImage.classList.add("zoomed-image");
+                zoomedImage.setAttribute("data-advertisement-id", event.target.getAttribute("data-advertisement-id"));
                 zoomedImage.src = event.target.src;
                 zoomedImage.style.top = event.target.getBoundingClientRect().top + "px";
                 zoomedImage.style.left = event.target.getBoundingClientRect().left + "px";
                 zoomedImage.style.width = event.target.getBoundingClientRect().width + "px";                
                 zoomedImage.style.height = event.target.getBoundingClientRect().height + "px";                
-                zoomedImage.addEventListener("click", () => {
-                    zoomedImage.remove();
-                    event.target.style.opacity = "1";
-                });
                 
                 // Prevent clicking on screen while zooming in.
-                document.querySelector("#screen-overlay").style.pointerEvents = "all";
+                document.querySelector("#zoom-screen-overlay").style.pointerEvents = "all";
+                document.querySelector("#zoom-screen-overlay").style.opacity = "1";
 
-                // Zoom into image.
+
+                // Zoom into image. setTimeout to allow for the image to appended to the DOM first.
                 setTimeout(() => {
                     zoomedImage.style.top = "0";
                     zoomedImage.style.left = "0";
@@ -71,12 +70,17 @@
                     zoomedImage.style.height = "100vh";
                 }, 0);
 
-                // Allow clicking again after zooming in is finished.
-                setTimeout(() => {
-                    document.querySelector("#screen-overlay").style.pointerEvents = "none";
-                }, 750);
-
                 document.body.append(zoomedImage);
+            }
+
+            function unzoomPicture() {
+                const zoomedImage = document.querySelector(".zoomed-image");
+                const originalImageAdvertismementId = zoomedImage.getAttribute("data-advertisement-id");
+
+                document.querySelector("#zoom-screen-overlay").style.pointerEvents = "none";
+                document.querySelector("#zoom-screen-overlay").style.opacity = "0";
+                document.querySelector(`[data-advertisement-id="${originalImageAdvertismementId}"]`).style.opacity = "1";
+                zoomedImage.remove();
             }
 
             function showAdvertisementsForAudienceId(audienceId) {
@@ -96,7 +100,7 @@
     </head>
 
     <body>
-        <div id="screen-overlay"></div>
+        <div id="zoom-screen-overlay" onclick="unzoomPicture()"></div>
         <div id="advertisement-popup"><p style="font-size: 16px;"></p><div id="advertisement-popup-arrow" data-popper-arrow></div></div>
 
         <navbar>
@@ -530,7 +534,7 @@
                         {% for advertisement in advertisements[audience_id] %}
                             <div class="advertisements-container__card">
                                 <div class="advertisements-container__card__image">
-                                    <img src="{{ advertisement.image_url }}" onclick="zoomIntoPicture(event)">
+                                    <img src="{{ advertisement.image_url }}" onclick="zoomIntoPicture(event)" data-advertisement-id="{{ advertisement.id }}">
                                 </div>
                                 
                                 <div class="advertisements-container__card__info">

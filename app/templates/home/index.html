@@ -548,10 +548,12 @@
                                                 advertisementIdToPopupDescription["{{ advertisement.id }}"] = "{{ advertisement.popup.description | e | replace('\n', '\\n') }} ";
                                             </script>
     
-                                            <i class="gg-info advertisement{{ advertisement.id }}-popup-button"
-                                               onmouseenter="showAdvertismentPopup('{{ advertisement.id }}')"
-                                               onmouseleave="hideAdvertisementPop()">
-                                            </i>
+                                            <div>
+                                                <i class="gg-info advertisement{{ advertisement.id }}-popup-button"
+                                                   onmouseenter="showAdvertismentPopup('{{ advertisement.id }}')"
+                                                   onmouseleave="hideAdvertisementPop()">
+                                                </i>
+                                            </div>
                                         {% endif %}
                                     </div>
     

@@ -107,6 +107,7 @@ a {
 
 #advertisement-popup {
   display: none;
+  max-width: 40vw;
   background: #ffffff;
   color: #222222;
   padding: 0 8px;
@@ -209,7 +210,7 @@ a {
   flex-direction: column;
 
   background-color: #ffffff;
-  padding-top: 2rem;
+  padding-top: 1rem;
   border-bottom: 4px solid var(--princeton-orange-faded);
   border-radius: 8px;
 
@@ -222,16 +223,19 @@ a {
 
 
 .advertisement-container__card__title {
+  flex-grow: 1;
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   margin-left: 1rem;
   margin-right: 1rem;
+  margin-bottom: 0.75rem;
 }
 
 .advertisement-container__card__title > h3 {
   position: relative;
-  top: -30px;
+  /* top: -30px; */
   margin-bottom: 0;
 
   text-transform: uppercase;
@@ -240,10 +244,22 @@ a {
   color: var(--princeton-orange);
 }
 
-.advertisement-container__card__title > i {
+.advertisement-container__card__title > div {
+  flex-basis: 20px;
+}
+
+.advertisement-container__card__title > div > i {
+  left: 10px;
+  transform: translateY(-50%);
+  float: right;
+
   min-width: 20px;
   min-height: 20px;
   cursor: pointer;
+}
+
+.advertisements-container__card__info {
+  height: 100%;
 }
 
 .advertisements-container__card__info > div:last-child {
@@ -275,8 +291,6 @@ a {
 
 
 .advertisement-container__card__asterisks {
-  display: flex;
-  flex-direction: column;
   margin-left: 1rem;
 }
 

@@ -17,8 +17,6 @@ def index():
     audiences = []
     for audience in Audience.query.all():
         audiences.append(audience_schema.dump(audience))
-        
 
-    print(advertisements)
 
     return render_template("home/index.html", audiences = audiences, advertisements = advertisements)

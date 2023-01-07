@@ -9,6 +9,11 @@
                 margin-bottom: 4px;
             }
         </style>
+        <script>
+            function indicateProcessing() {
+                document.querySelector(".response > p").innerHTML = "Processing...";
+            }
+        </script>
     </head>
 
     <body>
@@ -17,7 +22,7 @@
             <br>
             <input type="password" name="upload_auth_token" placeholder="Authorization Token">
             <br>
-            <input type="submit" value="Upload">
+            <input type="submit" value="Upload" onclick="indicateProcessing()">
         </form>
 
         <div class="response">

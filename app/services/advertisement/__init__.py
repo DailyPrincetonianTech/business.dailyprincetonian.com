@@ -140,7 +140,7 @@ def create_advertisement(dto: AdvertisementObjectOptions):
     # Check if advertisement with the same title/audience_id 
     # combination already exists.
     if (Advertisement.query.filter_by(title=dto.title, audience_id=dto.audience_id).first() is not None):
-        errors.append("An advertisement with the same title and audience ID already exists.")
+        errors.append("An advertisement with the same title and audience ID already exists." + dto.title)
         return errors
 
 

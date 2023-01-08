@@ -2,7 +2,7 @@ from flask import Blueprint, request, render_template, redirect, current_app
 from openpyxl import load_workbook
 
 from app.database import db
-from app.services.advertisement import AdvertisementObjectOptions, create_advertisement, delete_all_advertisements
+from app.services.advertisement import AdvertisementObjectOptions, create_advertisements, delete_all_advertisements
 
 
 
@@ -52,13 +52,15 @@ def _validateFile(file, errors):
 def _processFile(file, errors):
     COLUMN_NAMES = ["audience_id", "advertisement_title", "options", "asterisks", "popup", "image_url"]
     worksheets = load_workbook(file, data_only = True).worksheets
+    advertisement_dtos = []
     
     # Delete all advertisements.
     # Note that this is not committed yet.
     delete_errors = delete_all_advertisements()
     for error in delete_errors:
         errors.append(error)
-    
+
+    # Process each worksheet.
     for worksheet in worksheets:
         first_row = True
         for row in worksheet.iter_rows():
@@ -76,13 +78,15 @@ def _processFile(file, errors):
             
             # Create objects from compiled data.
             try:
-                dto = AdvertisementObjectOptions.from_excel_schema(**values)
-                create_errors = create_advertisement(dto)
-                for error in create_errors:
-                        errors.append("Row " + str(row[0].row) + ": " + error)
+                advertisement_dtos.append(AdvertisementObjectOptions.from_excel_schema(**values))
             except Exception as e:
                 errors.append("Row " + str(row[0].row) + ": " + str(e))
-            
+        
+    create_errors = create_advertisements(advertisement_dtos)
+    for error in create_errors:
+        errors.append(error)
+
+
     # If there are no errors, commit changes to database.
     if not errors:
         db.session.commit()

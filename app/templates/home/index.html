@@ -542,10 +542,10 @@
                                     <div class="advertisement-container__card__title">
                                         <h3>{{ advertisement.title }}</h3>
     
-                                        <!-- Additional Information if Clickable -->
-                                        {% if advertisement.clickable %}
+                                        <!-- Info Icon if Popup exists -->
+                                        {% if advertisement.popup %}
                                             <script>
-                                                advertisementIdToPopupDescription["{{ advertisement.id }}"] = "{{ advertisement.popup.description | e | replace('\n', '\\n') }} ";
+                                                advertisementIdToPopupDescription["{{ advertisement.id }}"] = "{{ advertisement.popup | e | replace('\n', '\\n') }} ";
                                             </script>
     
                                             <div>
@@ -565,6 +565,15 @@
                                         </div>
                                     {% endfor %}
     
+                                    <!-- Additional Information -->
+                                    {% if advertisement.additional_information %}
+                                        {% autoescape off %}
+                                        <div class="advertisement-container__card__additional-information">
+                                            <p>{{ advertisement.additional_information|replace("\n", "<br>") }}</p>
+                                        </div>
+                                        {% endautoescape %}
+                                    {% endif %}
+                                        
                                     <!-- Asterisks -->
                                     {% if advertisement.asterisks %}
                                         <div class="advertisement-container__card__asterisks">

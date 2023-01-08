@@ -107,7 +107,7 @@ a {
 
 #advertisement-popup {
   display: none;
-  max-width: 40vw;
+  max-width: 35vw;
   background: #ffffff;
   color: #222222;
   padding: 0 8px;
@@ -146,6 +146,17 @@ a {
   top: 4px;
 }
 
+
+.advertisement-container__card__additional-information {
+  margin-left: 1rem;
+  margin-right: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.advertisement-container__card__additional-information > p {
+  font-size: 16px;
+  color: #222222;
+}
 
 .advertisements-card-container { 
   display: flex;
@@ -249,6 +260,7 @@ a {
 }
 
 .advertisement-container__card__title > div > i {
+  top: 50%;
   left: 10px;
   transform: translateY(-50%);
   float: right;

@@ -10,7 +10,6 @@ from sqlalchemy.exc import IntegrityError
 from app.models.advertisement import Advertisement
 from app.models.advertisement_option import AdvertisementOption
 from app.models.advertisement_asterisk import AdvertisementAsterisk
-from app.models.advertisement_popup import AdvertisementPopup
 from app.models.advertisement import advertisement_schema
 
 
@@ -19,10 +18,11 @@ from app.models.advertisement import advertisement_schema
 class AdvertisementObjectOptions:
     title         : str         # Required.
     audience_id   : int         # Required.
-    option_labels : list[str]   # Required.
-    costs         : list[float] # Required.
+    option_labels : List[str]   # Required.
+    costs         : List[float] # Required.
     image_url     : str         # Required
-    asterisks     : list[str]
+    additional_information : str
+    asterisks     : List[str]
     popup         : str
     
     @classmethod
@@ -32,9 +32,14 @@ class AdvertisementObjectOptions:
         option_labels = []
         costs         = []
         image_url     = str(kwargs.get("image_url")).strip() if kwargs.get("image_url") else None
+        additional_information = str(kwargs.get("additional_information")).strip() if kwargs.get("additional_information") else None
         asterisks     = []
         popup         = str(kwargs.get("popup")).strip() if kwargs.get("popup") else None
         
+        # If additional_information is empty, set it to None.
+        if additional_information is not None and additional_information == "":
+            additional_information = None
+
         # If popup is empty, set it to None.
         if popup is not None and popup == "":
             popup = None
@@ -61,7 +66,7 @@ class AdvertisementObjectOptions:
             raise ValueError("Error parsing options and costs.")
         
         # DTO created by passed-in options. Validation step.
-        dto = cls(title, audience_id, option_labels, costs, image_url, asterisks, popup)
+        dto = cls(title, audience_id, option_labels, costs, image_url, additional_information, asterisks, popup)
         dto.validate()
         return dto
     
@@ -117,8 +122,8 @@ def create_advertisements(dtos: List[AdvertisementObjectOptions]):
     '''
     Creates advertisements in the database,
     while also creating the appropriate constituent
-    objects, such as AdvertisementOption, AdvertisementAsterisk,
-    AdvertisementPopup objects, in the database as well.
+    objects, such as AdvertisementOption, AdvertisementAsterisk objects
+    in the database as well.
     
     @return: errors, where errors is a list of errors that occurred during
     the creation process. If errors is empty, then the advertisements have been
@@ -143,7 +148,8 @@ def create_advertisements(dtos: List[AdvertisementObjectOptions]):
                 "title": dto.title,
                 "audience_id": dto.audience_id,
                 "image_url": dto.image_url,
-                "clickable": dto.popup is not None
+                "additional_information": dto.additional_information,
+                "popup": dto.popup
             })
             current_advertisement_id += 1
 
@@ -210,29 +216,6 @@ def create_advertisements(dtos: List[AdvertisementObjectOptions]):
         db.session.rollback()
 
 
-    # Create advertisement popups.
-    try:
-        advertisement_popup_mappings = []
-        current_advertisement_id = starting_advertisement_id
-        for dto in dtos:
-            if dto.popup:
-                advertisement_popup_mappings.append({
-                    "advertisement_id": current_advertisement_id,
-                    "description": dto.popup
-                })
-            current_advertisement_id += 1
-
-        db.session.bulk_insert_mappings(
-            AdvertisementPopup, 
-            advertisement_popup_mappings
-        )
-        db.session.flush()
-    
-    except Exception as e:
-        errors.append("Error creating advertisement popups: " + str(e))
-        db.session.rollback()
-
-
     # We are rollbacking here regardless of whether there
     # are any objects in the session if errors exist.
     if errors:
@@ -257,9 +240,6 @@ def delete_all_advertisements():
 
         # Delete all advertisement asterisks.
         delete_statements.append(delete(AdvertisementAsterisk))
-
-        # Delete all advertisement popups.
-        delete_statements.append(delete(AdvertisementPopup))
 
         # Delete all advertisements.
         delete_statements.append(delete(Advertisement))

@@ -5,7 +5,6 @@ from app.database import db
 
 from app.models.advertisement_option import AdvertisementOptionSchema
 from app.models.advertisement_asterisk import AdvertisementAsteriskSchema
-from app.models.advertisement_popup import AdvertisementPopupSchema
 
 
 class Advertisement(db.Model):
@@ -13,18 +12,17 @@ class Advertisement(db.Model):
     title       = db.Column(db.String, nullable = False)
     audience_id = db.Column(db.Integer, db.ForeignKey("audience.id"), nullable = False)
     image_url   = db.Column(db.String, nullable = False)
-    clickable   = db.Column(db.Boolean, nullable = False)
+    additional_information = db.Column(db.String, nullable = True)
+    popup       = db.Column(db.String, nullable = True)
     # Constituent models.
     options     = db.relationship("AdvertisementOption", backref = "advertisement", lazy = "joined")
     asterisks   = db.relationship("AdvertisementAsterisk", backref = "advertisement", lazy = "joined")
-    popup       = db.relationship("AdvertisementPopup", backref = "advertisement", lazy = "joined", uselist = False)
     
     
 class AdvertisementSchema(SQLAlchemyAutoSchema):
     # Constituent models.
     options   = fields.Nested(AdvertisementOptionSchema(only = ["label", "cost"]), many = True)
     asterisks = fields.Nested(AdvertisementAsteriskSchema(only = ["label"]), many = True)
-    popup     = fields.Nested(AdvertisementPopupSchema(only = ["description"]), many = False)
     
     class Meta:
         model = Advertisement

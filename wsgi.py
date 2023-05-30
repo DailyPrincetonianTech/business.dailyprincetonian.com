@@ -4,9 +4,8 @@ the application code.
 '''
 
 from app import init_app
-from config import DevelopmentConfig
+from config import ProductionConfig
 
-# Initialize and run a new app instance. 
-app = init_app(DevelopmentConfig)
+app = init_app(ProductionConfig)
 if __name__ == "__main__":
     app.run()

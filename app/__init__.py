@@ -26,8 +26,7 @@ def init_app(config_object):
         app.register_blueprint(home.views.blueprint)
         app.register_blueprint(upload.views.blueprint)
         
-        return app
-    
+    return app
 
 def _seed_data():
     # Seeded audience data.

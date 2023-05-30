@@ -18,7 +18,7 @@
             const advertisementIdToPopupDescription = {};
             let popper = null;
 
-            function showAdvertismentPopup(advertisementId) {
+            function showAdvertisementPopup(advertisementId) {
                 document.querySelector("#advertisement-popup").style.display = "block";
                 if (popper) popper.destroy();
                 
@@ -550,7 +550,7 @@
     
                                             <div>
                                                 <i class="gg-info advertisement{{ advertisement.id }}-popup-button"
-                                                   onmouseenter="showAdvertismentPopup('{{ advertisement.id }}')"
+                                                   onmouseenter="showAdvertisementPopup('{{ advertisement.id }}')"
                                                    onmouseleave="hideAdvertisementPop()">
                                                 </i>
                                             </div>

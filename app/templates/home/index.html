@@ -526,7 +526,7 @@
                         {% for advertisement in advertisements[audience_id] %}
                             <div class="advertisements-container__card">
                                 <div class="advertisements-container__card__image">
-                                    <img src="{{ advertisement.image_url }}" onclick="zoomIntoPicture(event)" data-advertisement-id="{{ advertisement.id }}">
+                                    <img style="height: 368px;" src="{{ advertisement.image_url }}" onclick="zoomIntoPicture(event)" data-advertisement-id="{{ advertisement.id }}">
                                 </div>
                                 
                                 <div class="advertisements-container__card__info">

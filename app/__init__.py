@@ -34,7 +34,7 @@ def _seed_data():
     audiences.append(Audience(id = 0, name = "Princeton Student or Organization"))
     audiences.append(Audience(id = 1, name = "Local Advertiser (Mercer County)"))
     audiences.append(Audience(id = 2, name = "National Advertiser"))
-    audiences.append(Audience(id = 3, name = "Recruiter"))
+    # audiences.append(Audience(id = 3, name = "Recruiter"))
     
     # Check if audience data already exists.
     for audience in audiences:

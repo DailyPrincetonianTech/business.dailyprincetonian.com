@@ -815,9 +815,8 @@ navbar {
 .prince--header {
   display: flex;
   flex-flow: row wrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: flex-start;
-  margin-bottom: 100px;
 }
 
 .prince--title {

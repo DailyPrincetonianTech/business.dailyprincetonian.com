@@ -33,6 +33,7 @@ body {
 a {
   color: #e1712f;
   text-decoration: none;
+  font-size: 30px;
 }
 
 .section {
@@ -167,7 +168,6 @@ a {
 .advertisements-container__card {
   display: flex;
   flex-direction: column;
-
   margin-bottom: 2vw;
   margin-left: 1rem;
   width: 25vw;
@@ -229,9 +229,6 @@ a {
   font-size: 28px;
   font-weight: 600;
 }
-
-
-
 
 .advertisement-container__card__title {
   flex-grow: 1;
@@ -1313,7 +1310,7 @@ navbar {
   width: 100vw;
   background-color: #000;
   color: #fff;
-  transform: translateY(100%);
+  /* transform: translateY(100%); */
 }
 
 .footer--row {
